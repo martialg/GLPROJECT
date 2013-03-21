@@ -7,8 +7,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Line;
+import model.Property;
 
 /*
  * To change this template, choose Tools | Templates
@@ -21,6 +24,17 @@ import java.util.logging.Logger;
  */
 public class Read {
 
+    private ArrayList<Line> lines = new ArrayList<Line>();
+
+    //construct
+    public Read() {
+    }
+
+    //getter
+    public ArrayList<Line> getLines() {
+        return lines;
+    }
+    
     //Lecture du fichier
     public void read(File input_file) {
         String nameFile = input_file.getPath();
@@ -33,7 +47,7 @@ public class Read {
                 while ((line = input_text.readLine()) != null) {
                     System.out.println(line + " " + line.length());
                     if (!("".equals(line))) {
-                        this.graphCreation(line);
+                        this.extractLine(line);
                     }
                 }
                 input_text.close();
@@ -50,7 +64,7 @@ public class Read {
     }
 
     //Creation du graphe
-    public void graphCreation(String line) {
+    public void extractLine(String line) {        
         /**
          * PARTIE TYPE RELATION
          */
@@ -74,6 +88,7 @@ public class Read {
         /**
          * PARTIE ATTRIBUTS
          */
+        HashMap<String,Property> property_map = null;
         boolean have_arg;                                                        //indique si la liaison est de type Avec ou Sans Arg
         int first_arg = line.indexOf("[");
         //si il y a un argument
@@ -87,10 +102,10 @@ public class Read {
             if (!(ending_arg == -1)) {
                 String[] arg = args.split(",");
                 for (String s : arg) {
-                    this.splitUpArgument(s);
+                    property_map = this.splitUpProperties(s);
                 }
             } else {
-                this.splitUpArgument(args);
+                property_map = this.splitUpProperties(args);
             }
 
         } else {
@@ -113,17 +128,12 @@ public class Read {
             name_relation = line.substring(start, (type_right - 2));
         }
 
-        //Creer le graphe avec les fonctions du graphe qui seront coder
-        /**
-         * Rappel des variables : - typeRelation : 1 si un seul sens / 2 si
-         * double - firstName : Premier nom de l'association - lastName :
-         * Deuxieme nom de l'assocation - nameRelation : Nom de l'association -
-         * argument_type / argument_values sont dans la fonction decomposeArgument
-         */
+        this.lines.add(new Line(first_name, last_name, name_relation, type_relation, property_map));
+        
     }
 
     //decoupe un argument proprement pour l'ajouter au type de relation du graph
-    public void splitUpArgument(String arg) {
+    public HashMap<String,Property> splitUpProperties(String arg) {
         int separator = arg.indexOf("=");
         String[] tab_val = null;
         String argument_type = arg.substring(0, separator);
@@ -139,6 +149,9 @@ public class Read {
                 iterator++;
             }
         }  
-        //ajouter le type et la valeur de l'argument au graph
+        HashMap<String,Property> property_map = new HashMap<String,Property>();
+        Property properties = new Property(argument_type, tab_val);
+        property_map.put(argument_type, properties);
+        return property_map;
     }
 }
