@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Graph;
 
 /*
  * To change this template, choose Tools | Templates
@@ -21,12 +22,12 @@ import java.util.logging.Logger;
  */
 public class Read {
 
+    
     //Lecture du fichier
-    public void read(File input_file) {
-        String nameFile = input_file.getPath();
-        if ("txt".equals(nameFile.substring(nameFile.length() - 3, nameFile.length()))) {
+    public Graph read(String file_path, Graph graph) {
+        if ("txt".equals(file_path.substring(file_path.length() - 3, file_path.length()))) {
             try {
-                FileInputStream fis = new FileInputStream(input_file);
+                FileInputStream fis = new FileInputStream(new File(file_path));
                 InputStreamReader isr = new InputStreamReader(fis);
                 BufferedReader input_text = new BufferedReader(isr);
                 String line;
@@ -47,6 +48,7 @@ public class Read {
         } else {
             System.out.println("Ceci n'est pas un fichier texte");
         }
+        return null;
     }
 
     //Creation du graphe
