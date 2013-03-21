@@ -23,7 +23,7 @@ import model.Property;
  * @observor Quentin
  */
 public class Read {
-
+    
     private ArrayList<Line> lines = new ArrayList<Line>();
 
     //construct
@@ -36,11 +36,10 @@ public class Read {
     }
     
     //Lecture du fichier
-    public void read(File input_file) {
-        String nameFile = input_file.getPath();
-        if ("txt".equals(nameFile.substring(nameFile.length() - 3, nameFile.length()))) {
+    public void read(String file_path) {
+        if ("txt".equals(file_path.substring(file_path.length() - 3, file_path.length()))) {
             try {
-                FileInputStream fis = new FileInputStream(input_file);
+                FileInputStream fis = new FileInputStream(file_path);
                 InputStreamReader isr = new InputStreamReader(fis);
                 BufferedReader input_text = new BufferedReader(isr);
                 String line;
