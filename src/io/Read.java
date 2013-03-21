@@ -28,6 +28,7 @@ public class Read {
 
     //construct
     public Read() {
+        System.out.println("pomme");
     }
 
     //getter
