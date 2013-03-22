@@ -1,7 +1,6 @@
 package io;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -34,7 +33,6 @@ public class Read {
                 BufferedReader input_text = new BufferedReader(isr);
                 String line;
                 while ((line = input_text.readLine()) != null) {
-                    System.out.println(line + " " + line.length());
                     if (!("".equals(line))) {
                         lines.add(Read.extractLine(line));
                     }
@@ -78,7 +76,7 @@ public class Read {
         /**
          * PARTIE ATTRIBUTS
          */
-        HashMap<String,Property> property_map = null;
+        HashMap<String,Property> property_map = new HashMap<String,Property>();
         boolean have_arg;                                                        //indique si la liaison est de type Avec ou Sans Arg
         int first_arg = line.indexOf("[");
         //si il y a un argument
@@ -131,9 +129,11 @@ public class Read {
         int iterator = 0;
         // Controle si il y a plusieurs valeurs (ex : objet1/objet2)
         if (argument_values.indexOf("/") == -1) {
+            tab_val = new String[1];
             tab_val[iterator] = argument_values;
         } else {
             String[] value = argument_values.split("/");
+            tab_val = new String[value.length];
             for (String current_value : value) {              
                 tab_val[iterator] = current_value;
                 iterator++;

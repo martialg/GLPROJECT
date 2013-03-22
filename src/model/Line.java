@@ -5,6 +5,8 @@
 package model;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  *
@@ -44,5 +46,23 @@ public class Line {
 
     public HashMap<String, Property> getProperties() {
         return properties;
+    }
+    
+    @Override
+    public String toString(){
+        Set cles = properties.keySet();
+        Iterator i = cles.iterator();
+        String res = "Noms : " + node_name1 + "," + node_name2 + ", relation : " + relation_name + " de type " + relation_type;
+        res += "\n Argument : ";
+        while(i.hasNext()){
+            Object cle = i.next();
+            Object valeur = properties.get(cle);
+            res += "cle : " + cle + ", valeurs=";
+            for(int j = 0; j < properties.get(cle).getValues().length ; j++){
+                res += " "+properties.get(cle).getValues()[j];
+            }
+            
+        }
+        return res;
     }
 }
