@@ -5,6 +5,7 @@
 package model;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -73,4 +74,26 @@ public class Edge {
     public void addProperty(Property property) {
         properties.put(property.getName(), property);
     }    
+    
+    public String toString(){
+        String response = this.left.getName();
+        
+        String attributs = "";
+        if(this.properties.size()>0){
+            attributs = "[";
+            for(Map.Entry property: this.properties.entrySet()) {        
+                attributs += property.toString();
+            }
+            attributs += "]";
+        }
+        
+        if(this.direction == Direction.LEFT) {
+            response += "<--" + this.name + attributs + "--" + this.right.getName();
+        }else if(this.direction == Direction.RIGHT){
+            response += "--" + this.name + attributs + "-->" + this.right.getName();
+        }else{
+            response += "<--" + this.name + attributs + "-->" + this.right.getName();
+        }
+        return response + "\n";
+    }
 }

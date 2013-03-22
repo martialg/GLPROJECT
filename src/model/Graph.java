@@ -6,6 +6,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -18,7 +19,7 @@ public class Graph{
     
     /* Map of nodes */
     private HashMap<String,Node> nodes;
-    /* Map of edges, by node 
+    /* Map of edges, by node (name)
      * For each node in the graph, we store a list of all the adjacent edges
      */
     private HashMap<String,ArrayList<Edge>> edges;
@@ -74,5 +75,13 @@ public class Graph{
         // Replace the old list of edges by the new one
         edges.put(edge.getLeft().getName(), left_edges);
         edges.put(edge.getRight().getName(), right_edges);
+    }
+    
+    public String toString(){
+        String chaine = "Graph : \n";
+        for(Map.Entry entry: edges.entrySet()) {
+            chaine += entry.toString() +"\n";
+        }    
+        return chaine;
     }
 }
