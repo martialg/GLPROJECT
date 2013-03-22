@@ -1,16 +1,19 @@
 package main;
 
+import io.GraphCreator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.Graph;
 import io.Read;
 
 public class Main {
     
     public static void main(String[] args){
-        Read lecture = new Read();
-        lecture.readFile("C:\\Users\\Caedes\\Dropbox\\Quentin&Martial&Romain&Etienne\\Genie Logiciel\\graph.txt");
-        for(int i = 0 ; i < lecture.getLines().size() ; i++){
-            System.out.println(lecture.getLines().get(i));
+        try {
+            Graph graph = GraphCreator.GenerateGraph("graph.txt");
+            System.out.println(graph.toString());
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
 }

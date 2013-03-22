@@ -23,20 +23,9 @@ import model.Property;
  */
 public class Read {
     
-    private ArrayList<Line> lines = new ArrayList<Line>();
-
-    //construct
-    public Read() {
-        System.out.println("pomme");
-    }
-
-    //getter
-    public ArrayList<Line> getLines() {
-        return lines;
-    }
-    
     //Lecture du fichier
-    public void readFile(String file_path) {
+    public static ArrayList<Line> read(String file_path) throws Exception {
+        ArrayList<Line> lines = new ArrayList<Line>();
         if ("txt".equals(file_path.substring(file_path.length() - 3, file_path.length()))) {
             try {
                 FileInputStream fis = new FileInputStream(file_path);
@@ -45,7 +34,7 @@ public class Read {
                 String line;
                 while ((line = input_text.readLine()) != null) {
                     if (!("".equals(line))) {
-                        this.extractLine(line);
+                        lines.add(Read.extractLine(line));
                     }
                 }
                 input_text.close();
@@ -57,12 +46,13 @@ public class Read {
                 Logger.getLogger(Read.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            System.out.println("Ceci n'est pas un fichier texte");
+            throw new Exception("Ceci n'est pas un fichier texte");
         }
+        return lines;
     }
 
     //Creation du graphe
-    public void extractLine(String line) {        
+    public static Line extractLine(String line) {        
         /**
          * PARTIE TYPE RELATION
          */
@@ -100,10 +90,10 @@ public class Read {
             if (!(ending_arg == -1)) {
                 String[] arg = args.split(",");
                 for (String s : arg) {
-                    property_map = this.splitUpProperties(s);
+                    property_map = Read.splitUpProperties(s);
                 }
             } else {
-                property_map = this.splitUpProperties(args);
+                property_map = Read.splitUpProperties(args);
             }
 
         } else {
@@ -126,12 +116,12 @@ public class Read {
             name_relation = line.substring(start, (type_right - 2));
         }
 
-        this.lines.add(new Line(first_name, last_name, name_relation, type_relation, property_map));
+        return (new Line(first_name, last_name, name_relation, type_relation, property_map));
         
     }
 
     //decoupe un argument proprement pour l'ajouter au type de relation du graph
-    public HashMap<String,Property> splitUpProperties(String arg) {
+    public static HashMap<String,Property> splitUpProperties(String arg) {
         int separator = arg.indexOf("=");
         String[] tab_val = null;
         String argument_type = arg.substring(0, separator);

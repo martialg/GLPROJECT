@@ -31,4 +31,12 @@ public class Property {
     public String[] getValues() {
         return values;
     }
+    
+    public String toString(){
+        String response = "";
+        for(int i = 0; i < values.length - 1; i++)
+            response += values[i] + ",";
+        response += values[values.length-1];
+        return response;
+    }
 }
