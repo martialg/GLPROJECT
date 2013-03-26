@@ -18,6 +18,12 @@ import model.Property;
 
 public class GraphCreator {
     
+    /**
+     * Generate a graph from a file
+     * @param file_path file with information
+     * @return 
+     * @throws Exception 
+     */
     public static Graph GenerateGraph(String file_path) throws Exception{
         //recuperation des lignes
         ArrayList<Line> lines = Read.read(file_path);

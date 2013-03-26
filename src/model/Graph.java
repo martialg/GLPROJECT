@@ -20,11 +20,7 @@ public class Graph {
     /* Attributes */
     /* Map of nodes */
     private HashMap<String,Node> nodes;
-    /* Map of edges, by node (name)
-=======
-    private HashMap<String, Node> nodes;
     /* Map of edges, by node 
->>>>>>> feature_modele
      * For each node in the graph, we store a list of all the adjacent edges
      */
     private HashMap<String, ArrayList<Edge>> edges;
@@ -42,10 +38,36 @@ public class Graph {
         return nodes;
     }
 
+    public Node getNode(String name){
+        if(this.nodes.containsKey(name))
+            return this.nodes.get(name);
+        else
+            return null;
+    }
+    
     public HashMap<String, ArrayList<Edge>> getEdges() {
         return edges;
     }
 
+    /**
+     * Return current node's sons
+     * @param current_node current node
+     * @return current node's sons
+     */
+    public ArrayList<Node> getSons(Node current_node) {
+        ArrayList<Node> sons = new ArrayList<Node>();
+        ArrayList<Edge> edges = new ArrayList<Edge>();
+        if(this.edges.containsKey(current_node.getName()))
+            edges = this.edges.get(current_node.getName());
+        for(Edge edge : edges){
+            if(edge.getLeft().equals(current_node))
+                sons.add(edge.getRight());
+            else
+                sons.add(edge.getLeft());
+        }
+        return sons;
+    }
+    
     /**
      * Add a node to the graph
      *

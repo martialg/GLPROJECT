@@ -12,7 +12,7 @@ Pierre--like[since=2001]-->Oiseau
 Lucie--employee[hired=1999,role=caissier]-->Leclerc
 Auchan--like[since=2013]-->Findus
 Leclerc--like[since=2005]-->Saucisse
-Saucisse--category-->cheval
+Saucisse--category-->Cheval
 Anna--employee[hired=2004,role=Laveur]-->Leclerc
 Anna<--friend[since=1997]-->Pierre
 Anna<--friend[since=2003,share=CD/Jupe]-->Lucie
