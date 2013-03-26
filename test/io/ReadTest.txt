@@ -1,0 +1,5 @@
+Barbara<--friend[since=2002]-->Paul
+Barbara<--friend[since=2001]-->Jean
+Barbara--employee[hired=2007,role=laveur]-->Auchan
+Jean--like[since=2000]-->Saucisse
+Henri--like[since=1999]-->Findus
