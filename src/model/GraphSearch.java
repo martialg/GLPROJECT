@@ -46,4 +46,9 @@ public class GraphSearch {
                 return true;
         return false;
     }
+    
+    
+    public ArrayList<Node> getTagged_nodes(){
+        return this.tagged_nodes;
+    }
 }
