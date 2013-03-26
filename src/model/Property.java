@@ -4,12 +4,17 @@
  */
 package model;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
  *
  * @driver Romain
  * @observer Martial
  */
 public class Property {
+    
+    /* Attributes */
     
     private String name;
     private String[] values;
@@ -31,4 +36,24 @@ public class Property {
     public String[] getValues() {
         return values;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Property other = (Property) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Arrays.deepEquals(this.values, other.values)) {
+            return false;
+        }
+        return true;
+    }
+
+    
 }

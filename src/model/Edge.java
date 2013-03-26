@@ -5,6 +5,8 @@
 package model;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.Objects;
 
 /**
  *
@@ -13,34 +15,36 @@ import java.util.HashMap;
  */
 public class Edge {
     
-    private static enum Direction { LEFT, RIGHT, BOTH };
+    private static enum Direction {
+
+        LEFT, RIGHT, BOTH
+    };
 
     /* Attributes */
-    
     private String name;
     private Node left;
     private Node right;
     private Edge.Direction direction;
-    private HashMap<String,Property> properties;
-    
+    private HashMap<String, Property> properties;
+
     /**
      * Public constructor
+     *
      * @param name
      * @param left
      * @param right
      * @param property_name
-     * @param properties 
+     * @param properties
      */
     public Edge(String name, Node left, Node right, String direction) {
         this.name = name;
         this.left = left;
         this.right = right;
         this.direction = Edge.Direction.valueOf(direction);
-        this.properties = new HashMap<String,Property>();
+        this.properties = new HashMap<String, Property>();
     }
 
     /* Getters */
-    
     public String getName() {
         return name;
     }
@@ -48,15 +52,15 @@ public class Edge {
     public Node getLeft() {
         return left;
     }
-
+    
     public Node getRight() {
         return right;
     }
-
+    
     public Edge.Direction getDirection() {
         return direction;
     }
-
+    
     public HashMap<String, Property> getProperties() {
         return properties;
     }
@@ -64,13 +68,49 @@ public class Edge {
     public Property getProperty(String property_name) {
         return properties.get(property_name);
     }
-    
+
     /**
      * Add a property to the edge
+     *
      * @param property_name
-     * @param property_values 
+     * @param property_values
      */
     public void addProperty(Property property) {
         properties.put(property.getName(), property);
-    }    
+    }
+    
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Edge other = (Edge) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.left, other.left)) {
+            return false;
+        }
+        if (!Objects.equals(this.right, other.right)) {
+            return false;
+        }
+        if (this.direction != other.direction) {
+            return false;
+        }
+        for (Entry<String, Property> entry : other.properties.entrySet()) {
+            if (!Objects.equals(entry.getValue(), other.properties.get(entry.getKey()))) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
