@@ -47,7 +47,7 @@ public class GraphSearchTest {
     @Test
     public void testDepthFirstSearch() {
         System.out.println("depthFirstSearch");
-        String[] exp_result = {"Barbara","Paul","Jean","Saucisse","Auchan"};
+        String[] exp_result = {"Barbara","Paul","Jean","Saucisse","Auchan","Henri","Findus"};
         String file_path = "test/io/GraphCreatorTest.txt";
         try {
             Graph graph = GraphCreator.GenerateGraph(file_path);
@@ -61,6 +61,7 @@ public class GraphSearchTest {
                 assertEquals(node_name, exp_result[iterator]);
                 iterator++;
             }
+            assertEquals(iterator, 5);
         } catch (Exception ex) {
             Logger.getLogger(GraphSearchTest.class.getName()).log(Level.SEVERE, null, ex);
         }
