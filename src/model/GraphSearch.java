@@ -34,21 +34,4 @@ public class GraphSearch {
             }
         }
     }
-    
-    /**
-     * Permet de savoir si un noeud est tagé
-     * @param node_search
-     * @return vrai si le noeud est tagé faux sinon
-     */
-    public boolean isTagged(Node node_search){
-        for(Node node : this.tagged_nodes)
-            if(node.equals(node_search))
-                return true;
-        return false;
-    }
-    
-    
-    public ArrayList<Node> getTagged_nodes(){
-        return this.tagged_nodes;
-    }
 }
