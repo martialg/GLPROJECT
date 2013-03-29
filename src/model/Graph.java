@@ -6,6 +6,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
@@ -19,7 +20,7 @@ public class Graph {
 
     /* Attributes */
     /* Map of nodes */
-    private HashMap<String,Node> nodes;
+    private HashMap<String, Node> nodes;
     /* Map of edges, by node 
      * For each node in the graph, we store a list of all the adjacent edges
      */
@@ -38,36 +39,40 @@ public class Graph {
         return nodes;
     }
 
-    public Node getNode(String name){
-        if(this.nodes.containsKey(name))
+    public Node getNode(String name) {
+        if (this.nodes.containsKey(name)) {
             return this.nodes.get(name);
-        else
+        } else {
             return null;
+        }
     }
-    
+
     public HashMap<String, ArrayList<Edge>> getEdges() {
         return edges;
     }
 
     /**
      * Return current node's sons
+     *
      * @param current_node current node
      * @return current node's sons
      */
     public ArrayList<Node> getSons(Node current_node) {
         ArrayList<Node> sons = new ArrayList<Node>();
         ArrayList<Edge> edges = new ArrayList<Edge>();
-        if(this.edges.containsKey(current_node.getName()))
+        if (this.edges.containsKey(current_node.getName())) {
             edges = this.edges.get(current_node.getName());
-        for(Edge edge : edges){
-            if(edge.getLeft().equals(current_node))
+        }
+        for (Edge edge : edges) {
+            if (edge.getLeft().equals(current_node)) {
                 sons.add(edge.getRight());
-            else
+            } else {
                 sons.add(edge.getLeft());
+            }
         }
         return sons;
     }
-    
+
     /**
      * Add a node to the graph
      *
@@ -100,12 +105,12 @@ public class Graph {
         edges.put(edge.getLeft().getName(), left_edges);
         edges.put(edge.getRight().getName(), right_edges);
     }
-    
-    public String toString(){
+
+    public String toString() {
         String chaine = "Graph : \n";
-        for(Map.Entry entry: edges.entrySet()) {
-            chaine += entry.toString() +"\n";
-        }    
+        for (Map.Entry entry : edges.entrySet()) {
+            chaine += entry.toString() + "\n";
+        }
         return chaine;
     }
 
@@ -133,57 +138,96 @@ public class Graph {
         }
         return true;
     }
-    /*****************************
+
+    /**
+     * ***************************
      ****** PARTIE RECHERCHE *****
-     *****************************/
+     ****************************
+     */
     
+    /**
+     * Recherche ud parcours en profondeur pour chaque composante connexe
+     */
+    public ArrayList<Node> runDepthFirstSearch(Node node) {
+        ArrayList<Node> list_nodes_done = new ArrayList<Node>();
+        this.depthFirstSearch(node, list_nodes_done);
+        // Si il y a plusieurs composantes connexes
+        while (list_nodes_done.size() != this.nodes.size()) {
+            Iterator<Node> i = this.nodes.values().iterator();
+            Node first_node = i.next();
+            this.depthFirstSearch(first_node, list_nodes_done);
+        }
+        
+        return list_nodes_done;
+    }
+
     /**
      * Recherche en profondeur à partir du noeud courant
      */
-    public void depthFirstSearch(Graph graph, Node node, ArrayList<Node> list_nodes_done){
-        ArrayList<Node> sons = graph.getSons(node);
+    public void depthFirstSearch(Node node, ArrayList<Node> list_nodes_done) {
+        ArrayList<Node> sons = this.getSons(node);
         System.out.println(sons.size());
-        for(Node son : sons){
-            if(!isTagged(list_nodes_done, son)){
+        if (!isTagged(list_nodes_done, node)) {
+            list_nodes_done.add(node);
+        }
+        
+        for (Node son : sons) {
+            if (!isTagged(list_nodes_done, son)) {
                 list_nodes_done.add(son);
-                this.depthFirstSearch(graph, son, list_nodes_done);
+                this.depthFirstSearch(son, list_nodes_done);
             }
         }
     }
-    
+
     /**
-     *  Recherche en largeur à partir du noeud courant
+     * Recherche en largeur à partir du noeud courant
+     *
      * @param graph graphe a exploiter
      * @param node noeud de départ
      */
-    public void BFSSearch(Graph graph, Node node) { 
-	  ArrayList<Node> list_nodes = new ArrayList<Node>();
-	  ArrayList<Node> list_nodes_done = new ArrayList<Node>();
-	  list_nodes.add(node);
-	  while(!(list_nodes.isEmpty())){
-		Node first_node = list_nodes.get(0);
-		//afficher(first_node);
-		list_nodes_done.add(first_node);
-		ArrayList<Node> list_son = this.getSons(first_node);
-		for(int i = 0; i < list_son.size() ; i++){
-			Node son = list_son.get(i);
-			if(!isTagged(list_nodes_done,son)) {		//Si le fils est pas marqué ALORS
-				  list_nodes.add(son);
-			}
-		}
-		list_nodes.remove(list_nodes.get(0));
-	  }
+    public void BFSSearch(Node node, ArrayList<Node> list_nodes_done) {
+        /*ArrayList<Node> list_nodes = new ArrayList<Node>();
+        //ArrayList<Node> list_nodes_done = new ArrayList<Node>();
+        list_nodes.add(node);
+        while (!(list_nodes.isEmpty())) {
+            Node first_node = list_nodes.get(0);
+            //afficher(first_node);
+            list_nodes_done.add(first_node);
+            ArrayList<Node> list_son = this.getSons(first_node);
+            for (int i = 0; i < list_son.size(); i++) {
+                Node son = list_son.get(i);
+                if (!isTagged(list_nodes_done, son)) {		//Si le fils est pas marqué ALORS
+                    list_nodes.add(son);
+                }
+            }
+            list_nodes.remove(list_nodes.get(0));
+        }*/
+        ArrayList<Node> list_nodes = new ArrayList<Node>();
+        list_nodes.add(node);
+        list_nodes_done.add(node);
+        while (!(list_nodes.isEmpty())) {
+            Node x = list_nodes.remove(0);
+            ArrayList<Node> list_son = this.getSons(x);
+            for (int i = 0; i < list_son.size(); i++) {
+                Node son = list_son.get(i);
+                if (!isTagged(list_nodes_done, son)) {		//Si le fils est pas marqué ALORS    
+                    list_nodes_done.add(son);
+                    list_nodes.add(son);
+                }
+            }
+        }
     }
-    
+
     /**
      * Permet de savoir si un noeud est tagé
+     *
      * @param list liste des noeuds taggés
      * @param nd noeud a tester
      * @return vrai si le noeud est tagé faux sinon
      */
-    public boolean isTagged(ArrayList<Node> list, Node nd){
-        for(Node node : list) {
-            if(node.equals(nd)) {
+    public boolean isTagged(ArrayList<Node> list, Node nd) {
+        for (Node node : list) {
+            if (node.equals(nd)) {
                 return true;
             }
         }
