@@ -92,8 +92,9 @@ public class ReadTest {
     public void testSplitUpProperties() {
         System.out.println("splitUpProperties");
         String arg = "share=CD/Jupe";
-        //HashMap expResult = new HashMap<String,Property>();
-        //Property result = Read.splitUpProperties(arg);
-        //assertEquals(expResult, result);
+        String[] tabstring = {"CD","Jupe"};
+        Property expResult = new Property("share",tabstring);
+        Property result = Read.splitUpProperties(arg);
+        assertEquals(expResult, result);
     }
 }
