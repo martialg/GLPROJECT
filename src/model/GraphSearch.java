@@ -23,7 +23,7 @@ public class GraphSearch {
     /**
      * Recherche en profondeur à partir du noeud courant
      */
-    public void depthFirstSearch(){
+    /*public void depthFirstSearch(){
         ArrayList<Node> sons = graph.getSons(current_node);
         System.out.println(sons.size());
         for(Node son : sons){
@@ -33,22 +33,5 @@ public class GraphSearch {
                 this.depthFirstSearch();
             }
         }
-    }
-    
-    /**
-     * Permet de savoir si un noeud est tagé
-     * @param node_search
-     * @return vrai si le noeud est tagé faux sinon
-     */
-    public boolean isTagged(Node node_search){
-        for(Node node : this.tagged_nodes)
-            if(node.equals(node_search))
-                return true;
-        return false;
-    }
-    
-    
-    public ArrayList<Node> getTagged_nodes(){
-        return this.tagged_nodes;
-    }
+    }*/
 }
