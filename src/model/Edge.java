@@ -15,17 +15,12 @@ import java.util.Objects;
  * @observer Martial
  */
 public class Edge {
-    
-    private static enum Direction {
-
-        LEFT, RIGHT, BOTH
-    };
 
     /* Attributes */
     private String name;
     private Node left;
     private Node right;
-    private Edge.Direction direction;
+    private Direction direction;
     private HashMap<String, Property> properties;
 
     /**
@@ -41,7 +36,7 @@ public class Edge {
         this.name = name;
         this.left = left;
         this.right = right;
-        this.direction = Edge.Direction.valueOf(direction);
+        this.direction = Direction.valueOf(direction);
         this.properties = new HashMap<String, Property>();
     }
 
@@ -58,7 +53,7 @@ public class Edge {
         return right;
     }
     
-    public Edge.Direction getDirection() {
+    public Direction getDirection() {
         return direction;
     }
     
@@ -130,5 +125,13 @@ public class Edge {
             }
         }
         return true;
+    }
+
+    Node extractSoonNode(Node current_node) {
+        if(current_node.equals(this.left)){
+            return this.right;
+        }else{
+            return this.left;
+        }
     }
 }

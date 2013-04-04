@@ -23,7 +23,7 @@ public class DFSSearch extends GraphSearch {
     
     @Override
     public void search(Node node) {
-        ArrayList<Node> sons = this.getSons(node);
+        ArrayList<Node> sons = this.getSonsApplyFilter(node);
         System.out.println(sons.size());
         if (!this.isTagged(node)) {
             this.marked_nodes.add(node);
