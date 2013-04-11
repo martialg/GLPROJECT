@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class Request {
     
     private Graph graph;
-    private Node fisrt_node;
+    private Node first_node;
     private int level;
     private String mode;
     private boolean unicity;
@@ -28,13 +28,13 @@ public class Request {
         
         this.graph = graph;
         this.link_list = new ArrayList<Edge>();
-        String[] tab_val = request.split("/");
+        String[] tab_val = request.split(" ");
         
         //FIRST_NODE
         String name = tab_val[2];
         Node res_node = this.graph.getNode(name);
         if(res_node != null){
-           this.fisrt_node = res_node;
+           this.first_node = res_node;
         }
         else {
             System.out.println("Le nom ne fait référence à rien");
@@ -64,56 +64,59 @@ public class Request {
         for(int i = 10; i < tab_val.length; i++){
             link_valeur += tab_val[i];
         }
-        String[] argument = link_valeur.split("|");
+        
+        String[] argument = link_valeur.split("\\|");
         for (int i = 0; i < argument.length; i++) {              
             if((i+1) == argument.length){
-                createLinkList(tab_val[i].substring(0, tab_val[i].length()-1));
+                createLinkList(argument[i].substring(0, argument[i].length()-1));
             }
             else if(i == 0){
-                createLinkList(tab_val[1].substring(1));
+                System.out.println(argument[i]);
+                createLinkList(argument[i].substring(1));
             }
             else {                 
-                createLinkList(tab_val[i]);
+                createLinkList(argument[i]);
             }
         }
     }
     
     public void createLinkList(String arg){
+        
         String name_relation = "";
         int location_first_arg = arg.indexOf("[");
         //Si il y a des criteres sur attributs
-        if (!(location_first_arg == -1)) {
+        if (location_first_arg != -1) {
             arg = arg.substring(0, arg.length()-1);
             Property p;
             name_relation = arg.substring(0,location_first_arg);
-            Edge e = new  Edge(name_relation, fisrt_node, null, null);
+            Edge e = new  Edge(name_relation, first_node, (Node) null, Edge.Direction.BOTH.toString());
             String[] criteria = arg.split(",");
             for(int i = 0; i < criteria.length ; i++){
                 String[] values = criteria[i].split("=");
-                String title = values[1];
-                String[] value =  {values[2]};
+                String title = values[0];
+                String[] value =  {values[1]};
                 p = new Property(title, value);
                 e.addProperty(p);
             }
             this.link_list.add(e);
         }
-        //Si il n'y a pas de crtiere sur attributs mais juste un sens sur les arcs  
+        //Si il n'y a pas de critères sur attributs mais juste un sens sur les arcs  
         else {
             int location_space = arg.indexOf(" ");
-            if(!(location_space == -1)){
+            if(location_space == -1){
                 name_relation = arg;
-                Edge e = new  Edge(name_relation, fisrt_node, null, Edge.Direction.BOTH);
+                Edge e = new  Edge(name_relation, first_node, (Node) null, Edge.Direction.BOTH.toString());
                 this.link_list.add(e);
             }
             else {
                 name_relation = arg.substring(0,location_space);
                 String sens = arg.substring(location_space+1, location_space+2);
                 if (">".equals(sens)) {
-                    Edge e = new  Edge(name_relation, fisrt_node, null, Edge.Direction.RIGHT);
+                    Edge e = new  Edge(name_relation, first_node, (Node) null, Edge.Direction.RIGHT.toString());
                     this.link_list.add(e);
                 }
                 else if("<".equals(sens)) {
-                    Edge e = new  Edge(name_relation, fisrt_node, null, Edge.Direction.LEFT);
+                    Edge e = new  Edge(name_relation, first_node, (Node) null, Edge.Direction.LEFT.toString());
                     this.link_list.add(e);
                 }
             }
@@ -129,11 +132,11 @@ public class Request {
     }
 
     public Node getFisrt_node() {
-        return fisrt_node;
+        return first_node;
     }
 
     public void setFisrt_node(Node fisrt_node) {
-        this.fisrt_node = fisrt_node;
+        this.first_node = fisrt_node;
     }
 
     public int getLevel() {
@@ -171,7 +174,7 @@ public class Request {
     @Override
     public String toString(){
         String res = "-----------------------\n";
-        res += "Noeud de départ : " + this.fisrt_node +"\n";
+        res += "Noeud de départ : " + this.first_node.getName() +"\n";
         res += "Niveau : " + this.level + "\n";
         res += "Mode de recherche : " + this.mode + "\n";
         res += "Unicité ? : " + this.unicity + "\n";
