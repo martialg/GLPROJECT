@@ -127,7 +127,7 @@ public class Edge {
         return true;
     }
 
-    Node extractSoonNode(Node current_node) {
+    public Node extractSoonNode(Node current_node) {
         if(current_node.equals(this.left)){
             return this.right;
         }else{

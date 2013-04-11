@@ -6,11 +6,8 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
-/**
- *
- * @author Romain
- */
 public class DFSSearch extends GraphSearch {
 
     public DFSSearch(Graph graph) {
@@ -23,16 +20,26 @@ public class DFSSearch extends GraphSearch {
     
     @Override
     public void search(Node node) {
-        ArrayList<Node> sons = this.getSonsApplyFilter(node);
-        System.out.println(sons.size());
-        if (!this.isTagged(node)) {
-            this.marked_nodes.add(node);
-        }
-        
-        for (Node son : sons) {
-            if (!isTagged(son)) {
-                this.marked_nodes.add(son);
-                this.search(son);
+        this.marked_nodes.add(node);
+        //obligé d'appeler la méthode comme cela car il faut marque le premier
+        //noeud à l'appel de la méthode "search"
+        this.searchRecursive(node);
+    }
+    
+    public void searchRecursive(Node node){
+        //permet de récupérer noeud et arc associé pour effectuer
+        //la bonne unicité
+        HashMap<Node, Edge> pairs_son_edge = this.getSonsApplyFilter(node);
+        for (Entry<Node, Edge> pair : pairs_son_edge.entrySet()) {
+            Node temp_node = pair.getKey();
+            Edge temp_edge = pair.getValue();
+            if(this.uniqueness_type == 1 && !isTaggedNode(temp_node) 
+                    || this.uniqueness_type == 2 && !isTaggedEdge(temp_edge)){
+                if(!this.marked_nodes.contains(temp_node))
+                    this.marked_nodes.add(temp_node);
+                if(!this.marked_edges.contains(temp_edge))
+                    this.marked_edges.add(temp_edge);
+                this.searchRecursive(temp_node);
             }
         }
     }

@@ -19,6 +19,9 @@ public abstract class GraphSearch {
 
     protected Graph graph;
     protected ArrayList<Node> marked_nodes;
+    protected ArrayList<Edge> marked_edges;
+    /** Type d'unicité 1 : noeud / 2 : arc. Par défaut à 1*/
+    protected int uniqueness_type;
     protected ArrayList<String> list_connection;
     protected HashMap<String, Direction> edge_direction;
     protected HashMap<String, ArrayList<Property>> edge_propreties;
@@ -27,7 +30,13 @@ public abstract class GraphSearch {
     public GraphSearch(Graph graph, HashMap<String, ArrayList<Edge>> edges, int level) {
         this.graph = graph;
         this.marked_nodes = new ArrayList<Node>();
+        this.marked_edges = new ArrayList<Edge>();
+        this.uniqueness_type = 1;
         this.level = level;
+    }
+    
+    public void setUniquenessType(int type){
+        this.uniqueness_type = type;
     }
 
     /**
@@ -50,7 +59,7 @@ public abstract class GraphSearch {
      * @param nd noeud a tester
      * @return vrai si le noeud est tagé faux sinon
      */
-    public boolean isTagged(Node nd) {
+    public boolean isTaggedNode(Node nd) {
         for (Node node : this.marked_nodes) {
             if (node.equals(nd)) {
                 return true;
@@ -59,23 +68,34 @@ public abstract class GraphSearch {
         return false;
     }
 
+    /**
+    * Permet de savoir si un arc est tagé
+    *
+    * @param edge arc a tester
+    * @return vrai si le arc est tagé faux sinon
+    */
+    public boolean isTaggedEdge(Edge ed) {
+        for (Edge edge : this.marked_edges) {
+            if (edge.equals(ed)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public abstract void search(Node node);
 
-    public ArrayList<Node> getSonsApplyFilter(Node current_node) {
+    public HashMap<Node, Edge> getSonsApplyFilter(Node current_node) {
+        HashMap<Node, Edge> pairs_node_edge = new HashMap<Node, Edge>();
         ArrayList<Edge> list_edges = new ArrayList<Edge>();
-        ArrayList<Node> list_nodes = new ArrayList<Node>();
         Edge edge_temp;
         list_edges = getSonsEdge(current_node);
-        ArrayList<Edge> list_edges_filtered = new ArrayList<Edge>();
         for (Edge current_edge : list_edges) {
             edge_temp = applyAllFilters(current_edge);
             if (edge_temp != null)
-                list_edges_filtered.add(edge_temp);
+                pairs_node_edge.put(edge_temp.extractSoonNode(current_node), edge_temp);
         }
-        for (Edge current_edge_filtered : list_edges_filtered) {
-            list_nodes.add(current_edge_filtered.extractSoonNode(current_node));
-        }
-        return list_nodes;
+        return pairs_node_edge;
     }
 
 

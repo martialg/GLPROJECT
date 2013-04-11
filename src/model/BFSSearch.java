@@ -7,10 +7,6 @@ package model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- *
- * @author Romain
- */
 public class BFSSearch extends GraphSearch {
 
     public BFSSearch(Graph graph) {
