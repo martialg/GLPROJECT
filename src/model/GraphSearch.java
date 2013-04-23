@@ -85,6 +85,12 @@ public abstract class GraphSearch {
     
     public abstract void search(Node node);
 
+    /**
+     * Retourne les fils (association noeud, lien utilisé pour y parvenir) après
+     * les avoirs filtrés
+     * @param current_node
+     * @return 
+     */
     public HashMap<Node, Edge> getSonsApplyFilter(Node current_node) {
         HashMap<Node, Edge> pairs_node_edge = new HashMap<Node, Edge>();
         ArrayList<Edge> list_edges = new ArrayList<Edge>();
@@ -99,6 +105,11 @@ public abstract class GraphSearch {
     }
 
 
+    /**
+     * Méthode pour appliquer les filtres. On appelle dans cette méthode chaque filtre
+     * @param current_edge
+     * @return null si le lien ne correspond pas au filtre, le lien sinon
+     */
     public Edge applyAllFilters(Edge current_edge) {
         Edge temp_edge;
         temp_edge = applyFilterExploreEdge(current_edge);
