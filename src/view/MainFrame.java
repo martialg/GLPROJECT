@@ -35,17 +35,21 @@ public class MainFrame extends JFrame {
         JMenuItem quit = new javax.swing.JMenuItem();
         JMenu menu_2 = new javax.swing.JMenu();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         b_graph_create.setText("Construire un graphe");
-
         b_graph_display.setText("Afficher le graphe");
-
         b_graph_request.setText("Faire une requête");
-
         j_content.setColumns(20);
         j_content.setRows(5);
         jscroll.setViewportView(j_content);
+        menu_1.setText("Ouvrir");
+        choose_file.setText("Choisir un fichier");
+        menu_1.add(choose_file);
+        quit.setText("Quitter");
+        menu_1.add(quit);
+        menu.add(menu_1);
+        menu_2.setText("A propos");
+        menu.add(menu_2);
+        setJMenuBar(menu);
 
         javax.swing.GroupLayout p_displayLayout = new javax.swing.GroupLayout(p_display);
         p_display.setLayout(p_displayLayout);
@@ -61,7 +65,6 @@ public class MainFrame extends JFrame {
             .addGroup(p_displayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jscroll, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE))
         );
-
         javax.swing.GroupLayout p_allLayout = new javax.swing.GroupLayout(p_all);
         p_all.setLayout(p_allLayout);
         p_allLayout.setHorizontalGroup(
@@ -90,22 +93,6 @@ public class MainFrame extends JFrame {
                 .addComponent(b_graph_request)
                 .addContainerGap())
         );
-
-        menu_1.setText("Ouvrir");
-
-        choose_file.setText("Choisir un fichier");
-        menu_1.add(choose_file);
-
-        quit.setText("Quitter");
-        menu_1.add(quit);
-
-        menu.add(menu_1);
-
-        menu_2.setText("A propos");
-        menu.add(menu_2);
-
-        setJMenuBar(menu);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -119,6 +106,9 @@ public class MainFrame extends JFrame {
                 .addComponent(p_all, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        setVisible(true);
+        setTitle("Programme");
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         pack();
     }
     
