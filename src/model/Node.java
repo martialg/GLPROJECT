@@ -38,5 +38,7 @@ public class Node {
         return true;
     }
     
-    
+    public String toString() {
+        return "Nom: " +this.name+"\n";
+    }
 }

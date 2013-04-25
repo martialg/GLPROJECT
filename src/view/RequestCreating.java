@@ -108,7 +108,7 @@ public class RequestCreating extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 Request request = createRequest();
                 GraphSearch graph_search = request.execute();
-                //main_frame.setJ_content().add(new JLabel(graph_search.getResultats()));
+                main_frame.getJ_content().setText(graph_search.getResultats());
                 
             }
         });
