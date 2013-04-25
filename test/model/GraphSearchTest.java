@@ -496,12 +496,14 @@ public class GraphSearchTest {
     @Test
     public void testAddFilterEdgeDirection() {
         System.out.println("addFilterEdgeDirection");
-        String name_edge = "";
-        Direction direction = null;
-        GraphSearch instance = null;
-        instance.addFilterEdgeDirection(name_edge, direction);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        DFSSearch dfs = new DFSSearch(this.graph,-1);
+        Direction direction = Direction.RIGHT;
+        dfs.addFilterEdgeDirection("like", direction);
+        HashMap<String, Direction> result = dfs.edge_direction;
+        Direction d_test = Direction.RIGHT;
+        HashMap<String, Direction> test = new HashMap<String, Direction>();
+        test.put("like", d_test);
+        assertEquals(test, result);
     }
 
     /**
