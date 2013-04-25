@@ -4,7 +4,10 @@
  */
 package view;
 
+import controller.SaveFilter;
+import java.io.File;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -52,6 +55,41 @@ public class MainFrame extends JFrame {
         menu_2.setText("A propos");
         menu.add(menu_2);
         setJMenuBar(menu);
+        
+        if(!this.file_open){
+           b_graph_create.addActionListener(new java.awt.event.ActionListener() {
+               @Override
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    loadFile();
+                }
+            }); 
+           choose_file.addActionListener(new java.awt.event.ActionListener() {
+               @Override
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    loadFile();
+                }
+            });
+        }
+        else if(this.file_open){
+            b_graph_display.addActionListener(new java.awt.event.ActionListener() {
+               @Override
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    displayGraph();
+                }
+            }); 
+            b_graph_request.addActionListener(new java.awt.event.ActionListener() {
+               @Override
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    launchRequestCreating();
+                }
+            }); 
+        }
+        quit.addActionListener(new java.awt.event.ActionListener() {
+               @Override
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                   closeWindow();
+                }
+        }); 
 
         javax.swing.GroupLayout p_displayLayout = new javax.swing.GroupLayout(p_display);
         p_display.setLayout(p_displayLayout);
@@ -114,6 +152,26 @@ public class MainFrame extends JFrame {
         pack();
     }
     
+    private void closeWindow() {                                      
+        System.exit(0);
+    }   
     
+    public void loadFile(){
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new SaveFilter());
+
+        int reponse = fileChooser.showOpenDialog(this);
+        if (reponse == JFileChooser.APPROVE_OPTION) {
+            File selection = fileChooser.getSelectedFile();
+            //partie.load
+        }
+    }
     
+    private void launchRequestCreating() {
+        RequestCreating rc = new RequestCreating(this);
+    }
+    
+    public void displayGraph(){
+        //a faire
+    }
 }
