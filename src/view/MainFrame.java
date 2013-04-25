@@ -15,6 +15,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import model.Graph;
 
 /**
@@ -191,4 +192,18 @@ public class MainFrame extends JFrame {
     public void displayGraph(){
         //a faire
     }
+
+    public Graph getGraph() {
+        return graph;
+    }
+
+    public JTextArea getJ_content() {
+        return j_content;
+    }
+
+    public boolean isFile_open() {
+        return file_open;
+    }
+    
+    
 }

@@ -205,9 +205,30 @@ public class RequestCreating extends JDialog {
     
     /*
     public Request createRequest(){
-        String request = "";
+        Request rq = new Request();
+        //graphe
+        rq.setGraph(this.main_frame.getGraph());
         
-        Request rq = new Request(request);
+        //noeud initial
+        rq.setFirstNode()
+        
+        //niveau
+        
+        rq.setLevel();
+        
+        //mode
+        rq.setMode(this.combo_mode.getSelectedItem().toString());
+        
+        //unicity
+        boolean bool_unicity = false;
+        if("oui".equals(colorChoosed)){
+           bool_unicity = true;  
+        }
+        rq.setUnicity(bool_unicity);
+        
+        
+        //ArrayList<Edge> link_list
+        
         return rq;
     }*/
 }
