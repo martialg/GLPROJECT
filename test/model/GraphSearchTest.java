@@ -386,46 +386,38 @@ public class GraphSearchTest {
     public void testApplyFilterEdgeDirection() {
         System.out.println("applyFilterEdgeDirection_true");
         DFSSearch dfs = new DFSSearch(graph,-1);
-        String[] exp_result = {"BOTH","BOTH","RIGHT","3"};
-        String[] tab_result = new String[4];
-        Edge test_edge_true = null;
-        int iterator = 0;
-        for(int i = 0 ;i<graph.getEdges().get("Barbara").size(); i ++){
-            test_edge_true = graph.getEdges().get("Barbara").get(i);
-            Edge result = dfs.applyFilterEdgeDirection(test_edge_true, this.graph.getNode("Barbara"));
-            tab_result[i] = result.getDirection().toString();
-            iterator = i;
-        }
-        tab_result[iterator+1] = String.valueOf(iterator+1);
-        assertArrayEquals(exp_result, tab_result);
+        Node current_node = this.graph.getNode("Jean");
+        dfs.addFilterEdgeDirection("like", Direction.RIGHT);
+        Edge current_edge = this.graph.getEdges().get("Jean").get(1);
+        Edge test = dfs.applyFilterEdgeDirection(current_edge, current_node);
+        assertNotNull(test);
     }
-    
-    
-    
+
     /**
      * Test of applyFilterEdgeDirection method, of class GraphSearch.
      */
     @Test
     public void testApplyFilterEdgeDirection2() {
-        System.out.println("applyFilterEdgeDirection_false");
-        Edge expResult = graph.getEdges().get("Henri").get(0);
-        
-        //modification faut lien (Left)
-        Graph graph_false = new Graph();
-        Node henri = new Node("Henri");
-        graph_false.addNode(henri);
-        Node findus = new Node("Findus");
-        graph_false.addNode(findus);
-        String[] valuesp5 = {"1999"};
-        Property p5 = new Property("since", valuesp5);
-        Edge e5 = new Edge("like", henri, findus, "LEFT");
-        e5.addProperty(p5);
-        graph_false.addEdge(e5);
-        DFSSearch dfs_false = new DFSSearch(graph_false,-1);
-        Edge test_edge_false = graph.getEdges().get("Henri").get(0);
-        Edge result_false = dfs_false.applyFilterEdgeDirection(test_edge_false, henri);
-        
-        assertEquals(expResult, result_false);
+        System.out.println("applyFilterEdgeDirection_true");
+        DFSSearch dfs = new DFSSearch(graph,-1);
+        Node current_node = this.graph.getNode("Jean");
+        dfs.addFilterEdgeDirection("like", Direction.BOTH);
+        Edge current_edge = this.graph.getEdges().get("Jean").get(1);
+        Edge test = dfs.applyFilterEdgeDirection(current_edge, current_node);
+        assertNull(test);
+    }
+    
+    /**
+     * Test of applyFilterEdgeDirection method, of class GraphSearch.
+     */
+    @Test
+    public void testApplyFilterEdgeDirection3() {
+        System.out.println("applyFilterEdgeDirection_true");
+        DFSSearch dfs = new DFSSearch(graph,-1);
+        Node current_node = this.graph.getNode("Jean");
+        Edge current_edge = this.graph.getEdges().get("Jean").get(1);
+        Edge test = dfs.applyFilterEdgeDirection(current_edge, current_node);
+        assertNotNull(test);
     }
 
     /**
