@@ -1,20 +1,17 @@
 package main;
 
-import io.GraphCreator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import model.Graph;
-import io.Read;
-import model.GraphSearch;
+import view.MainFrame;
 
 public class Main {
     
     public static void main(String[] args){
-        try {
+       /* try {
             Graph graph = GraphCreator.GenerateGraph("graph.txt");
             System.out.println(graph.toString());
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
+        * */
+        new MainFrame();
     }
 }

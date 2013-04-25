@@ -28,6 +28,6 @@ public class SaveFilter extends FileFilter implements java.io.FileFilter {
 
     @Override
     public String getDescription() {
-        return "Sauvegardes (*.txt)";
+        return "Fichiers de création (*.txt)";
     }
 }

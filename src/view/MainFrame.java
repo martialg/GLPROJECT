@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import model.Graph;
@@ -69,6 +70,18 @@ public class MainFrame extends JFrame {
                     loadFile();
                 }
             });
+            b_graph_display.addActionListener(new java.awt.event.ActionListener() {
+               @Override
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    advertising();
+                }
+            }); 
+            b_graph_request.addActionListener(new java.awt.event.ActionListener() {
+               @Override
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    advertising();
+                }
+            }); 
         }
         else if(this.file_open){
             b_graph_display.addActionListener(new java.awt.event.ActionListener() {
@@ -82,7 +95,7 @@ public class MainFrame extends JFrame {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     launchRequestCreating();
                 }
-            }); 
+            });
         }
         quit.addActionListener(new java.awt.event.ActionListener() {
                @Override
@@ -148,7 +161,6 @@ public class MainFrame extends JFrame {
 
         setVisible(true);
         setTitle("Programme");
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         pack();
     }
     
@@ -167,8 +179,13 @@ public class MainFrame extends JFrame {
         }
     }
     
-    private void launchRequestCreating() {
+    public void launchRequestCreating() {
         RequestCreating rc = new RequestCreating(this);
+    }
+    
+    public void advertising() {
+        String msg = "Charger un fichier en premier pour créer le graphe";
+        JOptionPane.showMessageDialog(new JFrame(), msg);
     }
     
     public void displayGraph(){

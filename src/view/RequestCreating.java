@@ -31,7 +31,7 @@ public class RequestCreating extends JDialog {
     
     //Exemple : request -start nom -level level -unicity on/off -mode BFS/DFS -link (nom_relation[propriété=valeur,..] sens|nom_relation,...)
     public RequestCreating(MainFrame f) {
-        
+        super();
         this.main_frame = f;
         JLabel l_tittle = new javax.swing.JLabel();
         l_mode = new javax.swing.JLabel();
@@ -200,7 +200,6 @@ public class RequestCreating extends JDialog {
         );
 
         setVisible(true);
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         pack();
     }
     
