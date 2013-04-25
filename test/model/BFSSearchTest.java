@@ -51,7 +51,7 @@ public class BFSSearchTest {
         try {
             Graph graph = GraphCreator.GenerateGraph(file_path);
             Node test_node = graph.getNode("Barbara");
-            BFSSearch bfs = new BFSSearch(graph);
+            BFSSearch bfs = new BFSSearch(graph,-1);
             bfs.search(test_node);
             
             String node_name=null;
