@@ -4,11 +4,16 @@
  */
 package view;
 
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import model.Edge;
+import model.Node;
+import model.Property;
+import model.Request;
 
 /**
  *
@@ -28,8 +33,9 @@ public class RequestCreating extends JDialog {
     private JComboBox combo_sensR2;
     private JTextField text_propR2;
     private JTextField text_nomR2;
+    private JTextField text_valR1;
+    private JTextField text_valR2;
     
-    //Exemple : request -start nom -level level -unicity on/off -mode BFS/DFS -link (nom_relation[propriété=valeur,..] sens|nom_relation,...)
     public RequestCreating(MainFrame f) {
         super();
         this.main_frame = f;
@@ -57,33 +63,41 @@ public class RequestCreating extends JDialog {
         text_nomR2 = new javax.swing.JTextField();
         JLabel l_nomR2 = new javax.swing.JLabel();
         JLabel Attr = new javax.swing.JLabel();
-        JButton b_cancel = new javax.swing.JButton();
-        JButton b_valide = new javax.swing.JButton();
+        JLabel l_1 = new javax.swing.JLabel();
+        text_valR1 = new javax.swing.JTextField();
+        JLabel l_2 = new javax.swing.JLabel();
+        text_valR2 = new javax.swing.JTextField();
+        JButton b_cancel = new javax.swing.JButton("Annuler");
+        JButton b_valide = new javax.swing.JButton("Rechercher");
         
         l_tittle.setText("CHOIX DE LA RECHERCHE :");
         l_mode.setText("Mode de recherche");
         combo_mode.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Largeur", "Profondeur" }));
         l_level.setText("Niveau de parcours");
-        text_level.setText("jTextField1");
+        text_level.setText("");
         l_unicity.setText("Unicité");
         text_unicity.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Oui", "Non" }));
         l_node.setText("Noeud debut");
-        text_node.setText("jTextField2");
+        text_node.setText("");
         l_nomR1.setText("Nom relation");
-        text_nomR1.setText("jTextField3");
+        text_nomR1.setText("");
         l_prop1.setText("Propriété");
         R1.setText("RELATION 1 :");
-        text_propR1.setText("jTextField4");
+        text_propR1.setText("");
         l_sensR1.setText("Sens");
-        combo_sensR1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", ">", "<", "<>" }));
-        combo_sensR2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", ">", "<", "<>" }));
+        combo_sensR1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<>", ">", "<" }));
+        combo_sensR2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<>", ">", "<" }));
         l_sensR2.setText("Sens");
-        text_propR2.setText("jTextField4");
+        text_propR2.setText("");
         R2.setText("RELATION 2 :");
         l_propR2.setText("Propriété");
-        text_nomR2.setText("jTextField3");
+        text_nomR2.setText("");
         l_nomR2.setText("Nom relation");
         Attr.setText("ATTRIBUTS");
+        l_1.setText("=");
+        text_valR1.setText("");
+        l_2.setText("=");
+        text_valR2.setText("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -122,23 +136,39 @@ public class RequestCreating extends JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(58, 58, 58)
                                 .addComponent(b_cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(66, 66, 66)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(combo_mode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(text_level, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
                                     .addComponent(text_unicity, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(text_node)
-                                    .addComponent(text_nomR1)
-                                    .addComponent(text_propR1)
-                                    .addComponent(combo_sensR1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(text_nomR2)
-                                    .addComponent(text_propR2)
-                                    .addComponent(combo_sensR2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(text_node)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(30, 30, 30)
-                                .addComponent(b_valide, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(b_valide, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(text_propR1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(l_1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(text_valR1))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(text_nomR1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(combo_sensR1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(text_nomR2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(combo_sensR2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(text_propR2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(l_2)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(text_valR2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(0, 0, Short.MAX_VALUE)))))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -173,7 +203,9 @@ public class RequestCreating extends JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(l_prop1)
-                    .addComponent(text_propR1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(text_propR1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(l_1)
+                    .addComponent(text_valR1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(l_sensR1)
@@ -187,7 +219,10 @@ public class RequestCreating extends JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(l_propR2)
-                    .addComponent(text_propR2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(text_propR2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(l_2)
+                        .addComponent(text_valR2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(l_sensR2)
@@ -203,32 +238,73 @@ public class RequestCreating extends JDialog {
         pack();
     }
     
-    /*
     public Request createRequest(){
-        Request rq = new Request();
-        //graphe
-        rq.setGraph(this.main_frame.getGraph());
-        
-        //noeud initial
-        rq.setFirstNode()
-        
-        //niveau
-        
-        rq.setLevel();
-        
-        //mode
-        rq.setMode(this.combo_mode.getSelectedItem().toString());
-        
-        //unicity
-        boolean bool_unicity = false;
-        if("oui".equals(colorChoosed)){
-           bool_unicity = true;  
+        if((!"".equals(text_node.getText())) && (!"".equals(text_level.getText()))){
+            Request rq = new Request();
+            //graphe
+            rq.setGraph(this.main_frame.getGraph());
+            //noeud initial
+            String name_node = this.text_node.getText();
+            Node first_node = this.main_frame.getGraph().getNode(name_node);
+            rq.setFisrt_node(first_node);
+            //niveau
+            int level_field = Integer.parseInt(this.text_level.getText());
+            rq.setLevel(level_field);
+            //mode
+            String mode_choosed = "DFS";
+            if("Largeur".equals(combo_mode.getSelectedItem().toString())){
+               mode_choosed = "BFS";  
+            }
+            rq.setMode(mode_choosed);
+            //unicity
+            boolean bool_unicity = false;
+            if("Oui".equals(text_unicity.getSelectedItem().toString())){
+               bool_unicity = true;  
+            }
+            rq.setUnicity(bool_unicity);
+            ArrayList<Edge> link = new ArrayList<Edge>();
+            //ArrayList<Edge> link_list
+            if(!"".equals(text_nomR1.getText())){
+                Edge e = null;
+                if(!"<>".equals(this.combo_sensR1.getSelectedItem().toString())){
+                    e = new  Edge(text_nomR1.getText(), first_node, (Node) null, Edge.Direction.BOTH.toString());
+                }
+                else if(!">".equals(this.combo_sensR1.getSelectedItem().toString())){
+                    e = new  Edge(text_nomR1.getText(), first_node, (Node) null, Edge.Direction.RIGHT.toString());
+                }
+                else if(!"<".equals(this.combo_sensR1.getSelectedItem().toString())){
+                    e = new  Edge(text_nomR1.getText(), first_node, (Node) null, Edge.Direction.LEFT.toString());
+                }
+                if((!"".equals(this.text_propR1.getText())) && (!"".equals(this.text_valR1.getText()))){
+                    String[] value = {text_valR1.getText()};
+                    Property p = new Property(text_propR1.getText(), value);
+                    e.addProperty(p);
+                }
+                link.add(e);
+            }
+            if(!"".equals(text_nomR2.getText())){
+                Edge e = null;
+                if(!"<>".equals(this.combo_sensR2.getSelectedItem().toString())){
+                    e = new  Edge(text_nomR2.getText(), first_node, (Node) null, Edge.Direction.BOTH.toString());
+                }
+                else if(!">".equals(this.combo_sensR2.getSelectedItem().toString())){
+                    e = new  Edge(text_nomR2.getText(), first_node, (Node) null, Edge.Direction.RIGHT.toString());
+                }
+                else if(!"<".equals(this.combo_sensR2.getSelectedItem().toString())){
+                    e = new  Edge(text_nomR2.getText(), first_node, (Node) null, Edge.Direction.LEFT.toString());
+                }
+                if((!"".equals(this.text_propR2.getText())) && (!"".equals(this.text_valR2.getText()))){
+                    String[] value = {text_valR2.getText()};
+                    Property p = new Property(text_propR2.getText(), value);
+                    e.addProperty(p);
+                }
+                link.add(e);
+            }
+            rq.setLink_list(link);  
+            return rq;
         }
-        rq.setUnicity(bool_unicity);
-        
-        
-        //ArrayList<Edge> link_list
-        
-        return rq;
-    }*/
+        else {
+            return null;
+        }
+    }
 }

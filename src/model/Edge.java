@@ -16,7 +16,7 @@ import java.util.Objects;
  */
 public class Edge {
     
-    private static enum Direction {
+    public static enum Direction {
 
         LEFT, RIGHT, BOTH
     };

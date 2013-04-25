@@ -103,7 +103,13 @@ public class MainFrame extends JFrame {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                    closeWindow();
                 }
-        }); 
+        });
+        b_graph_request.addActionListener(new java.awt.event.ActionListener() {
+               @Override
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    launchRequestCreating();
+                }
+        });
 
         javax.swing.GroupLayout p_displayLayout = new javax.swing.GroupLayout(p_display);
         p_display.setLayout(p_displayLayout);
