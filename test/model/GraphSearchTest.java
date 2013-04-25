@@ -78,25 +78,19 @@ public class GraphSearchTest {
         Property p5 = new Property("since", valuesp5);
         Edge e5 = new Edge("like", henri, findus, "RIGHT");
         e5.addProperty(p5);
-        this.graph.addEdge(e5);
-        
-        
+        this.graph.addEdge(e5);     
     }
     
     public void testPrintGraph(){
         GraphSearchTest g1 = new GraphSearchTest();
         System.out.println("GRAPH : ");
-        System.out.println("Liens de Barbara : "+g1.getGraph().getEdges().get("Barbara"));
-        System.out.println("Liens de Paul : "+g1.getGraph().getEdges().get("Paul"));
-        System.out.println("Liens de Jean : "+g1.getGraph().getEdges().get("Jean"));
-        System.out.println("Liens de Auchan : "+g1.getGraph().getEdges().get("Auchan"));  
-        System.out.println("Liens de Saucisse : "+g1.getGraph().getEdges().get("Saucisse"));
-        System.out.println("Liens de Henri : "+g1.getGraph().getEdges().get("Henri"));      
-        System.out.println("Liens de Findus : "+g1.getGraph().getEdges().get("Findus"));
-    }
-    
-    public Graph getGraph(){
-        return this.graph;
+        System.out.println("Liens de Barbara : "+g1.graph.getEdges().get("Barbara"));
+        System.out.println("Liens de Paul : "+g1.graph.getEdges().get("Paul"));
+        System.out.println("Liens de Jean : "+g1.graph.getEdges().get("Jean"));
+        System.out.println("Liens de Auchan : "+g1.graph.getEdges().get("Auchan"));  
+        System.out.println("Liens de Saucisse : "+g1.graph.getEdges().get("Saucisse"));
+        System.out.println("Liens de Henri : "+g1.graph.getEdges().get("Henri"));      
+        System.out.println("Liens de Findus : "+g1.graph.getEdges().get("Findus"));
     }
     
     @BeforeClass
@@ -181,121 +175,18 @@ public class GraphSearchTest {
     @Test
     public void testGetSonsEdge() {
         System.out.println("getSonsEdge");
-        String file_path = "test/io/GraphCreatorTest.txt";
-        String[] exp_result = {"friend","friend","friend","friend","employee","employee"};
-        ArrayList<Edge> result = null;
+        String[] exp_result = {"friend","friend","employee","3"};
+        String[] tab_result = new String[4];
+        DFSSearch dfs = new DFSSearch(graph,-1);
         int iterator = 0;
-        try {
-            Graph graph = GraphCreator.GenerateGraph(file_path);
-            DFSSearch dfs = new DFSSearch(graph,-1);
-            Node test_node = graph.getNode("Barbara");
-            result = dfs.getSonsEdge(test_node);
-            for(Edge current_edge : result){
-                assertEquals(exp_result[iterator], current_edge.getName());
-                //System.out.println("LIENS : "+current_edge.toString());
-                iterator++;
-            }
-            assertEquals(exp_result.length,result.size());
-        } catch (Exception ex) {
-            Logger.getLogger(GraphSearchTest.class.getName()).log(Level.SEVERE, null, ex);
+        Node test_node = graph.getNode("Barbara");
+        ArrayList<Edge> result = dfs.getSonsEdge(test_node);
+        for(Edge current_edge : result){
+            tab_result[iterator] = current_edge.getName();
+            iterator++;
         }
-    }
-
-    /**
-     * Test of search method, of class GraphSearch.
-     */
-    @Test
-    public void testSearch() {
-        System.out.println("search");
-        Node node = null;
-        GraphSearch instance = null;
-        instance.search(node);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getSonsApplyFilter method, of class GraphSearch.
-     */
-    @Test
-    public void testGetSonsApplyFilter() {
-        System.out.println("getSonsApplyFilter");
-        Node current_node = null;
-        GraphSearch instance = null;
-        HashMap expResult = null;
-        HashMap result = instance.getSonsApplyFilter(current_node);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of applyAllFilters method, of class GraphSearch.
-     */
-    @Test
-    public void testApplyAllFilters() {
-        System.out.println("applyAllFilters");
-        Edge current_edge = null;
-        GraphSearch instance = null;
-        Edge expResult = null;
-        //Edge result = instance.applyAllFilters(current_edge);
-        //assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of applyFilterFiltre method, of class GraphSearch.
-     */
-    @Test
-    public void testApplyFilterFiltre() {
-        System.out.println("applyFilterFiltre");
-        Edge current_edge = null;
-        GraphSearch instance = null;
-        Edge expResult = null;
-        //Edge result = instance.applyFilterFiltre(current_edge);
-        //assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of applyFilterExploreEdge method, of class GraphSearch.
-     */
-    @Test
-    public void testApplyFilterExploreEdge() {
-        System.out.println("applyFilterExploreEdge");
-        Node node_left = new Node("Barbara");
-        Node node_right = new Node("Paul");
-        String[] value = {"2002"};
-        Property property = new Property("since", value);
-        Edge expected_edge = new Edge("friend", node_left, node_right, "BOTH");
-        expected_edge.addProperty(property);
-        String file_path = "test/io/GraphCreatorTest.txt";
-        Edge edge_temp;
-        Edge tested_edge;
-        Edge test_edge;
-        
-        try {
-            Graph graph = GraphCreator.GenerateGraph(file_path);
-            DFSSearch dfs = new DFSSearch(graph,-1);
-            /*ArrayList<Edge> test_edge = graph.getEdges().get("Barbara");
-            for(Edge current_edge : test_edge){
-                System.out.println("ZeaeZEEZE : "+current_edge);
-                edge_temp = dfs.applyFilterFiltre(current_edge);
-                System.out.println("OOOOOOOOO : "+edge_temp);
-            }*/
-            test_edge = graph.getEdges().get("Barbara").get(0);
-            System.out.println("########################");
-            System.out.println("test_edge : "+test_edge);
-            //tested_edge = dfs.applyFilterExploreEdge(test_edge);
-            System.out.println("expected_edge : "+expected_edge);
-            //System.out.println("tested_edge"+tested_edge);
-            System.out.println("############################");
-            //assertEquals();
-        } catch (Exception ex) {
-            Logger.getLogger(GraphSearchTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        tab_result[iterator] = String.valueOf(iterator);
+        assertArrayEquals(exp_result, tab_result);
     }
 
     public class GraphSearchImpl extends GraphSearch {
@@ -306,5 +197,153 @@ public class GraphSearchTest {
 
         public void search(Node node) {
         }
+    }
+
+    /**
+     * Test of getSonsApplyFilter method, of class GraphSearch.
+     */
+    @Test
+    public void testGetSonsApplyFilter() {
+        System.out.println("getSonsApplyFilter");
+        DFSSearch dfs = new DFSSearch(graph,-1);
+        HashMap<Node, Edge> result = new HashMap<Node, Edge>();
+        Node test_node = graph.getNode("Barbara");
+        result = dfs.getSonsApplyFilter(test_node);
+        Edge[] tab_result = new Edge[3];
+        Edge[] exp_result = new Edge[3];
+        
+        int i = 0;
+        int j = 0;
+        
+        Node n1 = graph.getNode("Paul");
+        Edge e1 = null;
+        e1 = result.get(n1);
+        Node n2 = graph.getNode("Jean");
+        Edge e2 = null;
+        e2 = result.get(n2);
+        Node n3 = graph.getNode("Auchan");
+        Edge e3 = null;
+        e3 = result.get(n3);
+        Edge[] tab_e = {e1,e2,e3};
+
+        for(Edge res_edge : tab_e){
+            tab_result[i] = res_edge;
+            i++;
+        }
+        for(Edge exp_edge : dfs.getSonsEdge(test_node)){
+            exp_result[j] = exp_edge;
+            j++;
+        }
+        assertArrayEquals(exp_result, tab_result);
+    }
+
+    /**
+     * Test of applyAllFilters method, of class GraphSearch.
+     */
+    @Test
+    public void testApplyAllFilters() {
+        System.out.println("applyAllFilters");
+        Edge current_edge = null;
+        Node current_node = null;
+        GraphSearch instance = null;
+        Edge expResult = null;
+        Edge result = instance.applyAllFilters(current_edge, current_node);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of applyFilterPredicate method, of class GraphSearch.
+     */
+    @Test
+    public void testApplyFilterPredicate() {
+        System.out.println("applyFilterPredicate");
+        Edge current_edge = null;
+        GraphSearch instance = null;
+        Edge expResult = null;
+        Edge result = instance.applyFilterPredicate(current_edge);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of applyFilterAuthorizeEdge method, of class GraphSearch.
+     */
+    @Test
+    public void testApplyFilterAuthorizeEdge() {
+        System.out.println("applyFilterAuthorizeEdge");
+        Edge current_edge = null;
+        GraphSearch instance = null;
+        Edge expResult = null;
+        Edge result = instance.applyFilterAuthorizeEdge(current_edge);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of applyFilterEdgeDirection method, of class GraphSearch.
+     */
+    @Test
+    public void testApplyFilterEdgeDirection() {
+        System.out.println("applyFilterEdgeDirection_true");
+        DFSSearch dfs = new DFSSearch(graph,-1);
+        String[] exp_result = {"BOTH","BOTH","RIGHT","3"};
+        String[] tab_result = new String[4];
+        Edge test_edge_true = null;
+        int iterator = 0;
+        for(int i = 0 ;i<graph.getEdges().get("Barbara").size(); i ++){
+            test_edge_true = graph.getEdges().get("Barbara").get(i);
+            Edge result = dfs.applyFilterEdgeDirection(test_edge_true);
+            tab_result[i] = result.getDirection().toString();
+            iterator = i;
+        }
+        tab_result[iterator+1] = String.valueOf(iterator+1);
+        assertArrayEquals(exp_result, tab_result);
+    }
+    
+    /**
+     * Test of applyFilterEdgeDirection method, of class GraphSearch.
+     */
+    @Test
+    public void testApplyFilterEdgeDirection2() {
+        System.out.println("applyFilterEdgeDirection_false");
+        DFSSearch dfs = new DFSSearch(graph,-1);
+        Edge expResult = graph.getEdges().get("Henri").get(0);
+        
+        //modification faut lien (Left)
+        Graph graph_false = new Graph();
+        Node henri = new Node("Henri");
+        graph_false.addNode(henri);
+        Node findus = new Node("Findus");
+        graph_false.addNode(findus);
+        String[] valuesp5 = {"1999"};
+        Property p5 = new Property("since", valuesp5);
+        Edge e5 = new Edge("like", henri, findus, "LEFT");
+        e5.addProperty(p5);
+        graph_false.addEdge(e5);
+        DFSSearch dfs_false = new DFSSearch(graph_false,-1);
+        Edge test_edge_false = graph.getEdges().get("Henri").get(0);
+        Edge result_false = dfs_false.applyFilterEdgeDirection(test_edge_false);
+        
+        assertEquals(expResult, result_false);
+    }
+
+    /**
+     * Test of applyFilterAuthorizeNode method, of class GraphSearch.
+     */
+    @Test
+    public void testApplyFilterAuthorizeNode() {
+        System.out.println("applyFilterAuthorizeNode");
+        Edge current_edge = null;
+        Node current_node = null;
+        GraphSearch instance = null;
+        Edge expResult = null;
+        Edge result = instance.applyFilterAuthorizeNode(current_edge, current_node);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 }

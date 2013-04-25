@@ -138,7 +138,6 @@ public abstract class GraphSearch {
      */
     public Edge applyFilterPredicate(Edge current_edge){
         HashMap<String, Property> current_edge_properties = current_edge.getProperties();
-        
         ArrayList<Property> edge_properties_required = this.edge_propreties.get(current_edge.getName());
         if(edge_properties_required != null){
             for(Property property_required : edge_properties_required){
