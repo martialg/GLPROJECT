@@ -98,6 +98,19 @@ public class RequestCreating extends JDialog {
         text_valR1.setText("");
         l_2.setText("=");
         text_valR2.setText("");
+        
+        b_cancel.addActionListener(new java.awt.event.ActionListener() {
+               @Override
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                   setVisible(false);
+                }
+        });
+        b_valide.addActionListener(new java.awt.event.ActionListener() {
+               @Override
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                   launchSearching();
+                }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -306,5 +319,11 @@ public class RequestCreating extends JDialog {
         else {
             return null;
         }
+    }
+    
+    public void launchSearching(){
+        Request rq = createRequest();
+        //afficher [utiliser le this.main_frame.setJ_content()] pour modifier le contenu
+        // Saut de ligne sur un text_area : "\r\n"
     }
 }

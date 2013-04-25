@@ -5,7 +5,10 @@
 package view;
 
 import controller.SaveFilter;
+import io.GraphCreator;
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -47,6 +50,10 @@ public class MainFrame extends JFrame {
         b_graph_request.setText("Faire une requête");
         j_content.setColumns(20);
         j_content.setRows(5);
+        j_content.setText("Aucun graphe actuellement : en attente de fichier...");
+        j_content.setLineWrap(true);
+        j_content.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        j_content.setEnabled(false);
         jscroll.setViewportView(j_content);
         menu_1.setText("Ouvrir");
         choose_file.setText("Choisir un fichier");
@@ -102,12 +109,6 @@ public class MainFrame extends JFrame {
                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                    closeWindow();
-                }
-        });
-        b_graph_request.addActionListener(new java.awt.event.ActionListener() {
-               @Override
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    launchRequestCreating();
                 }
         });
 
@@ -182,7 +183,12 @@ public class MainFrame extends JFrame {
         int reponse = fileChooser.showOpenDialog(this);
         if (reponse == JFileChooser.APPROVE_OPTION) {
             File selection = fileChooser.getSelectedFile();
-            //partie.load
+            String path = selection.getPath();
+            try {
+                this.graph = GraphCreator.GenerateGraph(path);
+            } catch (Exception ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     
