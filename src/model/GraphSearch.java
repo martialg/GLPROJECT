@@ -47,6 +47,14 @@ public abstract class GraphSearch {
         this.nodes_authorize = new ArrayList<String>();
     }
     
+    public void addFilterEdgeDirection(String name_edge, Direction direction){
+        this.edge_direction.put(name_edge, direction);
+    }
+    
+    public void addFilterNodeAuthorize(String node_name) {
+        this.nodes_authorize.add(node_name);
+    }
+    
     public void setUniquenessType(int type){
         this.uniqueness_type = type;
     }
@@ -126,7 +134,7 @@ public abstract class GraphSearch {
         Edge temp_edge;
         temp_edge = applyFilterAuthorizeNode(current_edge, current_node);
         if(temp_edge != null) temp_edge = applyFilterAuthorizeEdge(current_edge);
-        if(temp_edge != null) temp_edge = applyFilterEdgeDirection(current_edge);
+        if(temp_edge != null) temp_edge = applyFilterEdgeDirection(current_edge, current_node);
         if(temp_edge != null) temp_edge = applyFilterPredicate(temp_edge);
         return temp_edge;
     }
@@ -183,15 +191,41 @@ public abstract class GraphSearch {
      * @param current_edge
      * @return null si le lien ne remplie pas les conditions vrai sinon
      */
-    public Edge applyFilterEdgeDirection(Edge current_edge){
+    public Edge applyFilterEdgeDirection(Edge current_edge, Node current_node){
         if(this.edge_direction.isEmpty()){
             return current_edge;
         }else if(this.edge_direction.get(current_edge.getName()) == null){
             return current_edge;
-        }else if(this.edge_direction.get(current_edge.getName()) == current_edge.getDirection()){
-            return current_edge;
         }else{
-            return null;
+            if(current_edge.getDirection() == Direction.BOTH){
+                if(this.edge_direction.get(current_edge.getName()) == current_edge.getDirection()){
+                    return current_edge;
+                }else{
+                    return null;
+                }
+            }else{
+                if(current_edge.getLeft() == current_node){
+                    if(current_edge.getDirection() == this.edge_direction.get(current_edge.getName())){
+                        return current_edge;
+                    }else{
+                        return null;
+                    }
+                }else{
+                    if(current_edge.getDirection() == Direction.RIGHT){
+                        if(this.edge_direction.get(current_edge.getName()) == Direction.LEFT){
+                            return current_edge;
+                        }else{
+                            return null;
+                        }
+                    }else{
+                        if(this.edge_direction.get(current_edge.getName()) == Direction.RIGHT){
+                            return current_edge;
+                        }else{
+                            return null;
+                        }
+                    }
+                }
+            }
         }
     }
     

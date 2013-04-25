@@ -1,14 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
-import io.GraphCreator;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -16,10 +9,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author Romain
- */
 public class GraphSearchTest {
     private Graph graph;
     
@@ -116,7 +105,6 @@ public class GraphSearchTest {
     public void testIsTaggedNode() {
         System.out.println("isTaggedNodeTrue");
         boolean exp_result_true = true;
-        //g1.testPrintGraph();
         DFSSearch dfs = new DFSSearch(graph,-1);
         Node test_node_true = graph.getNode("Jean");
         dfs.search(test_node_true);
@@ -243,6 +231,7 @@ public class GraphSearchTest {
     @Test
     public void testApplyAllFilters() {
         System.out.println("applyAllFilters");
+        DFSSearch dfs = new DFSSearch(graph,-1);
         Edge current_edge = null;
         Node current_node = null;
         GraphSearch instance = null;
@@ -296,7 +285,7 @@ public class GraphSearchTest {
         int iterator = 0;
         for(int i = 0 ;i<graph.getEdges().get("Barbara").size(); i ++){
             test_edge_true = graph.getEdges().get("Barbara").get(i);
-            Edge result = dfs.applyFilterEdgeDirection(test_edge_true);
+            Edge result = dfs.applyFilterEdgeDirection(test_edge_true, this.graph.getNode("Barbara"));
             tab_result[i] = result.getDirection().toString();
             iterator = i;
         }
@@ -310,7 +299,6 @@ public class GraphSearchTest {
     @Test
     public void testApplyFilterEdgeDirection2() {
         System.out.println("applyFilterEdgeDirection_false");
-        DFSSearch dfs = new DFSSearch(graph,-1);
         Edge expResult = graph.getEdges().get("Henri").get(0);
         
         //modification faut lien (Left)
@@ -326,7 +314,7 @@ public class GraphSearchTest {
         graph_false.addEdge(e5);
         DFSSearch dfs_false = new DFSSearch(graph_false,-1);
         Edge test_edge_false = graph.getEdges().get("Henri").get(0);
-        Edge result_false = dfs_false.applyFilterEdgeDirection(test_edge_false);
+        Edge result_false = dfs_false.applyFilterEdgeDirection(test_edge_false, henri);
         
         assertEquals(expResult, result_false);
     }
@@ -337,13 +325,27 @@ public class GraphSearchTest {
     @Test
     public void testApplyFilterAuthorizeNode() {
         System.out.println("applyFilterAuthorizeNode");
-        Edge current_edge = null;
-        Node current_node = null;
-        GraphSearch instance = null;
-        Edge expResult = null;
-        Edge result = instance.applyFilterAuthorizeNode(current_edge, current_node);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        DFSSearch dfs = new DFSSearch(this.graph,-1);
+        dfs.addFilterNodeAuthorize("Barbara");
+        dfs.addFilterNodeAuthorize("Auchan");
+        Node current_node = this.graph.getNode("Barbara");
+        Edge current_edge = this.graph.getEdges().get("Barbara").get(2);
+        Edge test = dfs.applyFilterAuthorizeNode(current_edge, current_node);
+        assertNotNull(test);
+    }
+    
+    /**
+     * Test of applyFilterAuthorizeNode method, of class GraphSearch.
+     */
+    @Test
+    public void testApplyFilterAuthorizeNode2() {
+        System.out.println("applyFilterAuthorizeNode2");
+        DFSSearch dfs = new DFSSearch(this.graph,-1);
+        dfs.addFilterNodeAuthorize("Barbara");
+        dfs.addFilterNodeAuthorize("Pomme");
+        Node current_node = this.graph.getNode("Barbara");
+        Edge current_edge = this.graph.getEdges().get("Barbara").get(2);
+        Edge test = dfs.applyFilterAuthorizeNode(current_edge, current_node);
+        assertNull(test);
     }
 }
