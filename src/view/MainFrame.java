@@ -64,35 +64,20 @@ public class MainFrame extends JFrame {
         menu_2.setText("A propos");
         menu.add(menu_2);
         setJMenuBar(menu);
-        
-        if(!this.file_open){
-           b_graph_create.addActionListener(new java.awt.event.ActionListener() {
+
+        b_graph_create.addActionListener(new java.awt.event.ActionListener() {
                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     loadFile();
                 }
-            }); 
-           choose_file.addActionListener(new java.awt.event.ActionListener() {
+        }); 
+        choose_file.addActionListener(new java.awt.event.ActionListener() {
                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     loadFile();
                 }
-            });
-            b_graph_display.addActionListener(new java.awt.event.ActionListener() {
-               @Override
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    advertising();
-                }
-            }); 
-            b_graph_request.addActionListener(new java.awt.event.ActionListener() {
-               @Override
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    advertising();
-                }
-            }); 
-        }
-        else if(this.file_open){
-            b_graph_display.addActionListener(new java.awt.event.ActionListener() {
+        });
+        b_graph_display.addActionListener(new java.awt.event.ActionListener() {
                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     displayGraph();
@@ -104,7 +89,6 @@ public class MainFrame extends JFrame {
                     launchRequestCreating();
                 }
             });
-        }
         quit.addActionListener(new java.awt.event.ActionListener() {
                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -193,7 +177,11 @@ public class MainFrame extends JFrame {
     }
     
     public void launchRequestCreating() {
-        RequestCreating rc = new RequestCreating(this);
+        if(this.file_open){
+            RequestCreating rc = new RequestCreating(this);
+        }else {
+            advertising();
+        }
     }
     
     public void advertising() {
@@ -202,7 +190,11 @@ public class MainFrame extends JFrame {
     }
     
     public void displayGraph(){
-        //a faire
+        if(this.file_open){
+            //fonction d'affichage
+        }else {
+            advertising();
+        }
     }
 
     public Graph getGraph() {
