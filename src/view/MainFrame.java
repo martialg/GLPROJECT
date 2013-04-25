@@ -26,7 +26,7 @@ import model.Graph;
  * @author Caedes
  */
 public class MainFrame extends JFrame {
-    
+
     private Graph graph;
     private javax.swing.JTextArea j_content;
     private boolean file_open = false;
@@ -35,7 +35,7 @@ public class MainFrame extends JFrame {
         JPanel p_all = new javax.swing.JPanel();
         JButton b_graph_create = new javax.swing.JButton();
         JButton b_graph_display = new javax.swing.JButton();
-        JButton  b_graph_request = new javax.swing.JButton();
+        JButton b_graph_request = new javax.swing.JButton();
         JPanel p_display = new javax.swing.JPanel();
         JScrollPane jscroll = new javax.swing.JScrollPane();
         j_content = new javax.swing.JTextArea();
@@ -60,93 +60,71 @@ public class MainFrame extends JFrame {
         menu_2.setText("A propos");
         menu.add(menu_2);
         setJMenuBar(menu);
+
+        b_graph_create.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadFile();
+            }
+        });
+        choose_file.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadFile();
+            }
+        });
         
-        if(!this.file_open){
-           b_graph_create.addActionListener(new java.awt.event.ActionListener() {
-               @Override
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    loadFile();
-                }
-            }); 
-           choose_file.addActionListener(new java.awt.event.ActionListener() {
-               @Override
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    loadFile();
-                }
-            });
-            b_graph_display.addActionListener(new java.awt.event.ActionListener() {
-               @Override
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    advertising();
-                }
-            }); 
-            b_graph_request.addActionListener(new java.awt.event.ActionListener() {
-               @Override
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    
-                }
-            }); 
-        }
-        else if(this.file_open){
-            b_graph_display.addActionListener(new java.awt.event.ActionListener() {
-               @Override
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    displayGraph();
-                }
-            }); 
-            b_graph_request.addActionListener(new java.awt.event.ActionListener() {
-               @Override
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    launchRequestCreating();
-                }
-            });
-        }
-        quit.addActionListener(new java.awt.event.ActionListener() {
-               @Override
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                   closeWindow();
-                }
+        b_graph_display.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                displayGraph();
+            }
         });
         b_graph_request.addActionListener(new java.awt.event.ActionListener() {
-               @Override
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    launchRequestCreating();
-                }
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                launchRequestCreating();
+            }
+        });
+
+        quit.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeWindow();
+                System.exit(0);
+            }
         });
 
         javax.swing.GroupLayout p_displayLayout = new javax.swing.GroupLayout(p_display);
         p_display.setLayout(p_displayLayout);
         p_displayLayout.setHorizontalGroup(
-            p_displayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-            .addGroup(p_displayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jscroll, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE))
-        );
+                p_displayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(p_displayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jscroll, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)));
         p_displayLayout.setVerticalGroup(
-            p_displayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 403, Short.MAX_VALUE)
-            .addGroup(p_displayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jscroll, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE))
-        );
+                p_displayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(0, 403, Short.MAX_VALUE)
+                .addGroup(p_displayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jscroll, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)));
         javax.swing.GroupLayout p_allLayout = new javax.swing.GroupLayout(p_all);
         p_all.setLayout(p_allLayout);
         p_allLayout.setHorizontalGroup(
-            p_allLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(p_allLayout.createSequentialGroup()
+                p_allLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(p_allLayout.createSequentialGroup()
                 .addGap(72, 72, 72)
                 .addGroup(p_allLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(b_graph_request, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(b_graph_display, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(b_graph_create, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(b_graph_request, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(b_graph_display, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(b_graph_create, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(70, Short.MAX_VALUE))
-            .addGroup(p_allLayout.createSequentialGroup()
+                .addGroup(p_allLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(p_display, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+                .addContainerGap()));
         p_allLayout.setVerticalGroup(
-            p_allLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(p_allLayout.createSequentialGroup()
+                p_allLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(p_allLayout.createSequentialGroup()
                 .addComponent(p_display, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(b_graph_create)
@@ -154,31 +132,28 @@ public class MainFrame extends JFrame {
                 .addComponent(b_graph_display)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(b_graph_request)
-                .addContainerGap())
-        );
+                .addContainerGap()));
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(p_all, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(p_all, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 14, Short.MAX_VALUE)
-                .addComponent(p_all, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+                .addComponent(p_all, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)));
 
         setVisible(true);
         setTitle("Programme");
         pack();
     }
-    
-    private void closeWindow() {                                      
+
+    private void closeWindow() {
         System.exit(0);
-    }   
-    
-    public void loadFile(){
+    }
+
+    public void loadFile() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new SaveFilter());
 
@@ -187,23 +162,34 @@ public class MainFrame extends JFrame {
             File selection = fileChooser.getSelectedFile();
             try {
                 graph = GraphCreator.GenerateGraph(selection.getAbsolutePath());
+                file_open = true;
             } catch (Exception ex) {
                 Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
-    
+
     public void launchRequestCreating() {
-        RequestCreating rc = new RequestCreating(this);
+        if(this.file_open) {
+            RequestCreating rc = new RequestCreating(this);
+        }
+        else {
+            advertising();
+        }
     }
-    
+
     public void advertising() {
         String msg = "Charger un fichier en premier pour créer le graphe";
         JOptionPane.showMessageDialog(new JFrame(), msg);
     }
-    
-    public void displayGraph(){
-        //a faire
+
+    public void displayGraph() {
+        if(this.file_open) {
+            this.getJ_content().setText(graph.toString());
+        }
+        else {
+            advertising();
+        }
     }
 
     public Graph getGraph() {
@@ -217,6 +203,4 @@ public class MainFrame extends JFrame {
     public boolean isFile_open() {
         return file_open;
     }
-    
-    
 }
