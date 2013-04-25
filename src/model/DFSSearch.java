@@ -17,6 +17,10 @@ public class DFSSearch extends GraphSearch {
         super(graph, level);
     }
     
+    public DFSSearch(Graph graph, boolean uniquess_type, int level, ArrayList<Edge> edges) {
+        super(graph,uniquess_type,level,edges);
+    }
+    
     @Override
     public void search(Node node) {
         this.marked_nodes.add(node);

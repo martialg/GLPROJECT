@@ -10,6 +10,10 @@ public class BFSSearch extends GraphSearch {
         super(graph, level);
     }
 
+    public BFSSearch(Graph graph, boolean uniquess_type, int level, ArrayList<Edge> edges) {
+        super(graph,uniquess_type,level,edges);
+    }
+    
     @Override
     public void search(Node node) {
         ArrayList<NodeLevel> list_nodes = new ArrayList<NodeLevel>();        

@@ -12,7 +12,9 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import model.Direction;
 import model.Edge;
+import model.GraphSearch;
 import model.Node;
 import model.Property;
 import model.Request;
@@ -105,6 +107,9 @@ public class RequestCreating extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Request request = createRequest();
+                GraphSearch graph_search = request.execute();
+                //main_frame.setJ_content().add(new JLabel(graph_search.getResultats()));
+                
             }
         });
         
@@ -276,13 +281,13 @@ public class RequestCreating extends JDialog {
             if(!"".equals(text_nomR1.getText())){
                 Edge e = null;
                 if(!"<>".equals(this.combo_sensR1.getSelectedItem().toString())){
-                    e = new  Edge(text_nomR1.getText(), first_node, (Node) null, Edge.Direction.BOTH.toString());
+                    e = new  Edge(text_nomR1.getText(), first_node, (Node) null, Direction.BOTH.toString());
                 }
                 else if(!">".equals(this.combo_sensR1.getSelectedItem().toString())){
-                    e = new  Edge(text_nomR1.getText(), first_node, (Node) null, Edge.Direction.RIGHT.toString());
+                    e = new  Edge(text_nomR1.getText(), first_node, (Node) null, Direction.RIGHT.toString());
                 }
                 else if(!"<".equals(this.combo_sensR1.getSelectedItem().toString())){
-                    e = new  Edge(text_nomR1.getText(), first_node, (Node) null, Edge.Direction.LEFT.toString());
+                    e = new  Edge(text_nomR1.getText(), first_node, (Node) null, Direction.LEFT.toString());
                 }
                 if((!"".equals(this.text_propR1.getText())) && (!"".equals(this.text_valR1.getText()))){
                     String[] value = {text_valR1.getText()};
@@ -294,13 +299,13 @@ public class RequestCreating extends JDialog {
             if(!"".equals(text_nomR2.getText())){
                 Edge e = null;
                 if(!"<>".equals(this.combo_sensR2.getSelectedItem().toString())){
-                    e = new  Edge(text_nomR2.getText(), first_node, (Node) null, Edge.Direction.BOTH.toString());
+                    e = new  Edge(text_nomR2.getText(), first_node, (Node) null, Direction.BOTH.toString());
                 }
                 else if(!">".equals(this.combo_sensR2.getSelectedItem().toString())){
-                    e = new  Edge(text_nomR2.getText(), first_node, (Node) null, Edge.Direction.RIGHT.toString());
+                    e = new  Edge(text_nomR2.getText(), first_node, (Node) null, Direction.RIGHT.toString());
                 }
                 else if(!"<".equals(this.combo_sensR2.getSelectedItem().toString())){
-                    e = new  Edge(text_nomR2.getText(), first_node, (Node) null, Edge.Direction.LEFT.toString());
+                    e = new  Edge(text_nomR2.getText(), first_node, (Node) null, Direction.LEFT.toString());
                 }
                 if((!"".equals(this.text_propR2.getText())) && (!"".equals(this.text_valR2.getText()))){
                     String[] value = {text_valR2.getText()};

@@ -88,7 +88,7 @@ public class Request {
             arg = arg.substring(0, arg.length()-1);
             Property p;
             name_relation = arg.substring(0,location_first_arg);
-            Edge e = new  Edge(name_relation, first_node, (Node) null, Edge.Direction.BOTH.toString());
+            Edge e = new  Edge(name_relation, first_node, (Node) null, Direction.BOTH.toString());
             String[] criteria = arg.split(",");
             for(int i = 0; i < criteria.length ; i++){
                 String[] values = criteria[i].split("=");
@@ -104,22 +104,33 @@ public class Request {
             int location_space = arg.indexOf(" ");
             if(location_space == -1){
                 name_relation = arg;
-                Edge e = new  Edge(name_relation, first_node, (Node) null, Edge.Direction.BOTH.toString());
+                Edge e = new  Edge(name_relation, first_node, (Node) null, Direction.BOTH.toString());
                 this.link_list.add(e);
             }
             else {
                 name_relation = arg.substring(0,location_space);
                 String sens = arg.substring(location_space+1, location_space+2);
                 if (">".equals(sens)) {
-                    Edge e = new  Edge(name_relation, first_node, (Node) null, Edge.Direction.RIGHT.toString());
+                    Edge e = new  Edge(name_relation, first_node, (Node) null, Direction.RIGHT.toString());
                     this.link_list.add(e);
                 }
                 else if("<".equals(sens)) {
-                    Edge e = new  Edge(name_relation, first_node, (Node) null, Edge.Direction.LEFT.toString());
+                    Edge e = new  Edge(name_relation, first_node, (Node) null, Direction.LEFT.toString());
                     this.link_list.add(e);
                 }
             }
         }
+    }
+    
+    public GraphSearch execute() {
+        GraphSearch graph_search = null;
+        if("BFS".equals(mode)) {
+            graph_search = new BFSSearch(graph,unicity,level,link_list);
+        } else {
+            graph_search = new DFSSearch(graph,unicity,level,link_list);
+        }
+        graph_search.search(first_node);
+        return graph_search;
     }
 
     public Graph getGraph() {

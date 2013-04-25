@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 /**
  * Cette classe est utilisée pour les différents parcours et recherches dans le
@@ -19,8 +20,8 @@ public abstract class GraphSearch {
 
     protected Graph graph;
     protected ArrayList<Node> marked_nodes;
-    protected ArrayList<Edge> marked_edges
-            ;
+    protected ArrayList<Edge> marked_edges;
+    
     //Les attributs suivants servent aux filtres
     /** Type d'unicité 1 : noeud / 2 : arc. Par défaut à 1*/
     protected int uniqueness_type;
@@ -45,6 +46,32 @@ public abstract class GraphSearch {
         this.edge_direction = new HashMap<String, Direction>();
         this.edge_propreties = new HashMap<String, ArrayList<Property>>();
         this.nodes_authorize = new ArrayList<String>();
+    }
+    
+    public GraphSearch(Graph graph, boolean uniquess_type, int level, ArrayList<Edge> edges) {
+        this.graph = graph;
+        this.marked_nodes = new ArrayList<Node>();
+        this.marked_edges = new ArrayList<Edge>();
+        this.uniqueness_type = (uniquess_type) ? 1 : 2;
+        this.level_max = level;
+        
+        this.list_connection = new ArrayList<String>();
+        this.edge_direction = new HashMap<String, Direction>();
+        this.edge_propreties = new HashMap<String, ArrayList<Property>>();
+        this.nodes_authorize = new ArrayList<String>();
+        
+        
+        
+        for(Edge edge : edges) {
+            this.list_connection.add(edge.getName());
+            this.edge_direction.put(edge.getName(),edge.getDirection());
+            
+            ArrayList<Property> properties = new ArrayList<Property>();
+            for(Entry property : edge.getProperties().entrySet()) {
+                properties.add((Property) property);
+            }
+            this.edge_propreties.put(edge.getName(), properties);
+        }
     }
     
     public void setUniquenessType(int type){
@@ -212,4 +239,11 @@ public abstract class GraphSearch {
         }
     }
     
+    public String getResultats() {
+        String resultats = "";
+        for(Node node : marked_nodes) {
+            resultats += node.toString();
+        }
+        return resultats;
+    }
 }
