@@ -35,12 +35,16 @@ public abstract class GraphSearch {
     /** nom des noeuds autorisés */
     protected ArrayList<String> nodes_authorize;
     
-    public GraphSearch(Graph graph, HashMap<String, ArrayList<Edge>> edges, int level) {
+    public GraphSearch(Graph graph, int level) {
         this.graph = graph;
         this.marked_nodes = new ArrayList<Node>();
         this.marked_edges = new ArrayList<Edge>();
         this.uniqueness_type = 1;
         this.level_max = level;
+        this.list_connection = new ArrayList<String>();
+        this.edge_direction = new HashMap<String, Direction>();
+        this.edge_propreties = new HashMap<String, ArrayList<Property>>();
+        this.nodes_authorize = new ArrayList<String>();
     }
     
     public void setUniquenessType(int type){
@@ -134,24 +138,30 @@ public abstract class GraphSearch {
      */
     public Edge applyFilterPredicate(Edge current_edge){
         HashMap<String, Property> current_edge_properties = current_edge.getProperties();
+        
         ArrayList<Property> edge_properties_required = this.edge_propreties.get(current_edge.getName());
-        for(Property property_required : edge_properties_required){
-            Property temp_current_property = current_edge_properties.get(property_required.getName());
-            if(temp_current_property != null){
-                for(String value_required : property_required.getValues()){
-                    boolean exist_value = false;
-                    for(String value_current : temp_current_property.getValues()){
-                        if(value_current.compareTo(value_required) == 0){
-                            exist_value = true;
+        if(edge_properties_required != null){
+            for(Property property_required : edge_properties_required){
+                Property temp_current_property = current_edge_properties.get(property_required.getName());
+                if(temp_current_property != null){
+                    for(String value_required : property_required.getValues()){
+                        boolean exist_value = false;
+                        for(String value_current : temp_current_property.getValues()){
+                            if(value_current.compareTo(value_required) == 0){
+                                exist_value = true;
+                            }
+                        }
+                        if(exist_value == false){
+                            return null;
                         }
                     }
-                    if(exist_value == false){
-                        return null;
-                    }
                 }
-            }
+            } 
+            return current_edge;
+        }else{
+            return current_edge;
         }
-        return current_edge;
+        
     }
     
     /**
@@ -195,7 +205,7 @@ public abstract class GraphSearch {
     public Edge applyFilterAuthorizeNode(Edge current_edge, Node current_node){
         if(this.nodes_authorize.isEmpty()){
             return current_edge;
-        }else if(this.nodes_authorize.contains(current_edge.extractSoonNode(current_node))){
+        }else if(this.nodes_authorize.contains(current_edge.extractSoonNode(current_node).getName())){
             return current_edge;
         }else{
             return null;

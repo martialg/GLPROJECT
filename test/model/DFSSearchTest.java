@@ -51,7 +51,7 @@ public class DFSSearchTest {
         try {
             Graph graph = GraphCreator.GenerateGraph(file_path);
             Node test_node = graph.getNode("Barbara");
-            DFSSearch dfs = new DFSSearch(graph);
+            DFSSearch dfs = new DFSSearch(graph,-1);
             dfs.search(test_node);
 
             String node_name = null;

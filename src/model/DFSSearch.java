@@ -12,13 +12,9 @@ public class DFSSearch extends GraphSearch {
     /** niveau courant dans le graphe */
     private int level_current;
 
-    public DFSSearch(Graph graph) {
-        super(graph, null, 0);
-        this.level_current = 1;
-    }
     
-    public DFSSearch(Graph graph, HashMap<String, ArrayList<Edge>> edges, int level) {
-        super(graph, edges, level);
+    public DFSSearch(Graph graph, int level) {
+        super(graph, level);
     }
     
     @Override
@@ -33,7 +29,7 @@ public class DFSSearch extends GraphSearch {
         //permet de récupérer noeud et arc associé pour effectuer
         //la bonne unicité
         this.level_current++;
-        if(this.level_current <= this.level_max){
+        if(this.level_current <= this.level_max || this.level_max == -1){
             HashMap<Node, Edge> pairs_son_edge = this.getSonsApplyFilter(node);
             for (Entry<Node, Edge> pair : pairs_son_edge.entrySet()) {
                 Node temp_node = pair.getKey();

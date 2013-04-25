@@ -5,13 +5,9 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 public class BFSSearch extends GraphSearch {
-
-    public BFSSearch(Graph graph) {
-        super(graph, null, 0);
-    }
     
-    public BFSSearch(Graph graph, HashMap<String, ArrayList<Edge>> edges, int level) {
-        super(graph, edges, level);
+    public BFSSearch(Graph graph, int level) {
+        super(graph, level);
     }
 
     @Override
@@ -22,7 +18,7 @@ public class BFSSearch extends GraphSearch {
         while (!(list_nodes.isEmpty())) {
             Node node_temp = list_nodes.get(0).getNode();
             int level_temp = list_nodes.remove(0).getLevel();
-            if(level_temp < this.level_max){
+            if(level_temp < this.level_max || this.level_max == -1){
                 HashMap<Node, Edge> pairs_son_edge = this.getSonsApplyFilter(node_temp);
                 for (Entry<Node, Edge> pair : pairs_son_edge.entrySet()) {
                     Node node_current = pair.getKey();
