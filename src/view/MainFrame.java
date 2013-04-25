@@ -5,7 +5,10 @@
 package view;
 
 import controller.SaveFilter;
+import io.GraphCreator;
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -80,7 +83,7 @@ public class MainFrame extends JFrame {
             b_graph_request.addActionListener(new java.awt.event.ActionListener() {
                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    advertising();
+                    
                 }
             }); 
         }
@@ -182,7 +185,11 @@ public class MainFrame extends JFrame {
         int reponse = fileChooser.showOpenDialog(this);
         if (reponse == JFileChooser.APPROVE_OPTION) {
             File selection = fileChooser.getSelectedFile();
-            //partie.load
+            try {
+                graph = GraphCreator.GenerateGraph(selection.getAbsolutePath());
+            } catch (Exception ex) {
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     
