@@ -73,6 +73,24 @@ public abstract class GraphSearch {
         }
     }
 
+    public void setFilterEdgeProperties(HashMap<String, ArrayList<Property>> edge_propreties){
+        this.edge_propreties = edge_propreties;
+    }
+    
+    public void setFilterEdgeDirection(HashMap<String, Direction> edge_direction){
+        this.edge_direction = edge_direction;
+    }
+    
+    public void setFilterNodeAuthorize(ArrayList<String> nodes_authorize){
+        this.nodes_authorize = nodes_authorize;
+    }
+    
+    public void setFilterEdgeAuthorize(ArrayList<String> edges_authorize){
+        this.edges_authorize = edges_authorize;
+    }
+    
+    
+    
     public void addFilterEdgeProperties(String edge_name, String property_name, String[] values){
         if(edge_propreties.isEmpty()){
             ArrayList<Property> list = new ArrayList<Property>();
@@ -298,6 +316,9 @@ public abstract class GraphSearch {
         String resultats = "";
         for(Node node : marked_nodes) {
             resultats += node.toString();
+        }
+        for(Edge edge : marked_edges){
+            resultats += edge.toString();
         }
         return resultats;
     }

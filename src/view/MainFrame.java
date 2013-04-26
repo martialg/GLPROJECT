@@ -32,6 +32,7 @@ public class MainFrame extends JFrame {
     private boolean file_open = false;
 
     public MainFrame() {
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel p_all = new javax.swing.JPanel();
         JButton b_graph_create = new javax.swing.JButton();
         JButton b_graph_display = new javax.swing.JButton();
@@ -83,7 +84,7 @@ public class MainFrame extends JFrame {
         b_graph_request.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                launchRequestCreating();
+                launchParameters();
             }
         });
 
@@ -169,9 +170,10 @@ public class MainFrame extends JFrame {
         }
     }
 
-    public void launchRequestCreating() {
+    
+    public void launchParameters(){
         if(this.file_open) {
-            RequestCreating rc = new RequestCreating(this);
+            Parameters rc = new Parameters(this, this.graph);
         }
         else {
             advertising();
@@ -203,4 +205,5 @@ public class MainFrame extends JFrame {
     public boolean isFile_open() {
         return file_open;
     }
+    
 }
