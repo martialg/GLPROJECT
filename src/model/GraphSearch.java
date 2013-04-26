@@ -21,15 +21,14 @@ public abstract class GraphSearch {
     protected Graph graph;
     protected ArrayList<Node> marked_nodes;
     protected ArrayList<Edge> marked_edges;
-    
     //Les attributs suivants servent aux filtres
     /** Type d'unicité 1 : noeud / 2 : arc. Par défaut à 1*/
     protected int uniqueness_type;
     /** liste des liens que nous avons le droit de parcourir*/
-    protected ArrayList<String> list_connection;
+    protected ArrayList<String> edges_authorize;
     /** HashMap nom du lien et de la direction qui doit prendre*/
     protected HashMap<String, Direction> edge_direction;
-    /** HashMap nom du lien et les propriétés qui lui sont associés*/
+    /** HashMap nom du lien et les propriétés (nom de la propriete et tableau de valeur) qui lui sont associés*/
     protected HashMap<String, ArrayList<Property>> edge_propreties;
     /** niveau max lors du parcours de graph */
     protected int level_max;
@@ -42,7 +41,7 @@ public abstract class GraphSearch {
         this.marked_edges = new ArrayList<Edge>();
         this.uniqueness_type = 1;
         this.level_max = level;
-        this.list_connection = new ArrayList<String>();
+        this.edges_authorize = new ArrayList<String>();
         this.edge_direction = new HashMap<String, Direction>();
         this.edge_propreties = new HashMap<String, ArrayList<Property>>();
         this.nodes_authorize = new ArrayList<String>();
@@ -55,7 +54,7 @@ public abstract class GraphSearch {
         this.uniqueness_type = (uniquess_type) ? 1 : 2;
         this.level_max = level;
         
-        this.list_connection = new ArrayList<String>();
+        this.edges_authorize = new ArrayList<String>();
         this.edge_direction = new HashMap<String, Direction>();
         this.edge_propreties = new HashMap<String, ArrayList<Property>>();
         this.nodes_authorize = new ArrayList<String>();
@@ -63,7 +62,7 @@ public abstract class GraphSearch {
         
         
         for(Edge edge : edges) {
-            this.list_connection.add(edge.getName());
+            this.edges_authorize.add(edge.getName());
             this.edge_direction.put(edge.getName(),edge.getDirection());
             
             ArrayList<Property> properties = new ArrayList<Property>();
@@ -72,6 +71,35 @@ public abstract class GraphSearch {
             }
             this.edge_propreties.put(edge.getName(), properties);
         }
+    }
+
+    public void addFilterEdgeProperties(String edge_name, String property_name, String[] values){
+        if(edge_propreties.isEmpty()){
+            ArrayList<Property> list = new ArrayList<Property>();
+            list.add(new Property(property_name, values));
+            this.edge_propreties.put(edge_name, list);
+        }else{
+            if(edge_propreties.get(edge_name) != null){
+                edge_propreties.get(edge_name).add(new Property(property_name, values));
+            }else{
+                ArrayList<Property> list = new ArrayList<Property>();
+                list.add(new Property(property_name, values));
+                this.edge_propreties.put(edge_name, list);
+            }
+                
+        }
+    }
+    
+    public void addFilterEdgeDirection(String name_edge, Direction direction){
+        this.edge_direction.put(name_edge, direction);
+    }
+    
+    public void addFilterNodeAuthorize(String node_name) {
+        this.nodes_authorize.add(node_name);
+    }
+    
+    public void addFilterEdgeAuthorize(String edge_name) {
+        this.edges_authorize.add(edge_name);
     }
     
     public void setUniquenessType(int type){
@@ -153,7 +181,7 @@ public abstract class GraphSearch {
         Edge temp_edge;
         temp_edge = applyFilterAuthorizeNode(current_edge, current_node);
         if(temp_edge != null) temp_edge = applyFilterAuthorizeEdge(current_edge);
-        if(temp_edge != null) temp_edge = applyFilterEdgeDirection(current_edge);
+        if(temp_edge != null) temp_edge = applyFilterEdgeDirection(current_edge, current_node);
         if(temp_edge != null) temp_edge = applyFilterPredicate(temp_edge);
         return temp_edge;
     }
@@ -165,7 +193,6 @@ public abstract class GraphSearch {
      */
     public Edge applyFilterPredicate(Edge current_edge){
         HashMap<String, Property> current_edge_properties = current_edge.getProperties();
-        
         ArrayList<Property> edge_properties_required = this.edge_propreties.get(current_edge.getName());
         if(edge_properties_required != null){
             for(Property property_required : edge_properties_required){
@@ -197,9 +224,9 @@ public abstract class GraphSearch {
      * @return null si le lien ne remplie pas les conditions vrai sinon
      */
     public Edge applyFilterAuthorizeEdge(Edge current_edge){
-        if(this.list_connection.isEmpty()){ 
+        if(this.edges_authorize.isEmpty()){ 
             return current_edge;
-        }else if(this.list_connection.contains(current_edge.getName())){
+        }else if(this.edges_authorize.contains(current_edge.getName())){
             return current_edge;
         }else{
             return null;
@@ -207,19 +234,47 @@ public abstract class GraphSearch {
     }
     
     /**
-     * On vérifie si la direction du lien courant est correcte
+     * On vérifie si la direction du lien courant est correcte.
+     * Attention au sens de la fleche selon si le noeud courant est a gauche ou
+     * a droite
      * @param current_edge
      * @return null si le lien ne remplie pas les conditions vrai sinon
      */
-    public Edge applyFilterEdgeDirection(Edge current_edge){
+    public Edge applyFilterEdgeDirection(Edge current_edge, Node current_node){
         if(this.edge_direction.isEmpty()){
             return current_edge;
         }else if(this.edge_direction.get(current_edge.getName()) == null){
             return current_edge;
-        }else if(this.edge_direction.get(current_edge.getName()) == current_edge.getDirection()){
-            return current_edge;
         }else{
-            return null;
+            if(current_edge.getDirection() == Direction.BOTH){
+                if(this.edge_direction.get(current_edge.getName()) == current_edge.getDirection()){
+                    return current_edge;
+                }else{
+                    return null;
+                }
+            }else{
+                if(current_edge.getLeft() == current_node){
+                    if(current_edge.getDirection() == this.edge_direction.get(current_edge.getName())){
+                        return current_edge;
+                    }else{
+                        return null;
+                    }
+                }else{
+                    if(current_edge.getDirection() == Direction.RIGHT){
+                        if(this.edge_direction.get(current_edge.getName()) == Direction.LEFT){
+                            return current_edge;
+                        }else{
+                            return null;
+                        }
+                    }else{
+                        if(this.edge_direction.get(current_edge.getName()) == Direction.RIGHT){
+                            return current_edge;
+                        }else{
+                            return null;
+                        }
+                    }
+                }
+            }
         }
     }
     
