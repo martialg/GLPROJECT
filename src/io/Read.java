@@ -12,26 +12,17 @@ import java.util.logging.Logger;
 import model.Line;
 import model.Property;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @driver Etienne  
- * @observor Quentin
- */
 public class Read {
     
     //Lecture du fichier
     public static ArrayList<Line> read(String file_path) throws Exception {
         ArrayList<Line> lines = new ArrayList<Line>();
         if ("txt".equals(file_path.substring(file_path.length() - 3, file_path.length()))) {
+            String line;
             try {
                 FileInputStream fis = new FileInputStream(file_path);
                 InputStreamReader isr = new InputStreamReader(fis);
-                BufferedReader input_text = new BufferedReader(isr);
-                String line;
+                BufferedReader input_text = new BufferedReader(isr);                
                 while ((line = input_text.readLine()) != null) {
                     if (!("".equals(line))) {
                         lines.add(Read.extractLine(line));
@@ -57,7 +48,7 @@ public class Read {
          * PARTIE TYPE RELATION
          */
         int type_relation = 0;
-        int type_left;                                                           //Localisation du début de la relation
+        int type_left;                                                          //Localisation du début de la relation
         if (line.indexOf("<") == -1) {
             type_relation = 1;
             type_left = line.indexOf("-");
@@ -77,13 +68,13 @@ public class Read {
          * PARTIE ATTRIBUTS
          */
         HashMap<String,Property> property_map = new HashMap<String,Property>();
-        boolean have_arg;                                                        //indique si la liaison est de type Avec ou Sans Arg
+        boolean have_arg;                                                       //indique si la liaison est de type Avec ou Sans Arg
         int first_arg = line.indexOf("[");
         //si il y a un argument
         if (!(first_arg == -1)) {
             have_arg = true;
             int last_arg = line.indexOf("]");
-            String args = line.substring(first_arg + 1, last_arg);                    //contient tous les arguments entre []
+            String args = line.substring(first_arg + 1, last_arg);              //contient tous les arguments entre []
             int ending_arg = args.indexOf(",");
             if (!(ending_arg == -1)) {
                 String[] arg = args.split(",");

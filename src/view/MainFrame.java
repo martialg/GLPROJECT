@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
 import controller.SaveFilter;
@@ -21,10 +17,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import model.Graph;
 
-/**
- *
- * @author Caedes
- */
 public class MainFrame extends JFrame {
 
     private Graph graph;

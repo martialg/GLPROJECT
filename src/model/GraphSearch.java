@@ -7,14 +7,6 @@ import java.util.Map.Entry;
 /**
  * Cette classe est utilisée pour les différents parcours et recherches dans le
  * graph
- * 
- * Sprint 2
- * @driver Martial
- * @observor Quentin
- * 
- * Sprint 3
- * @driver Quentin
- * @observor Martial
  */
 public abstract class GraphSearch {
 

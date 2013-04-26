@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.util.HashMap;
@@ -10,10 +6,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-/**
- *
- * @author Romain
- */
 public class Line {
 
     private String node_name1;
@@ -50,7 +42,6 @@ public class Line {
         return properties;
     }
     
-    @Override
     public String toString(){
         Set cles = properties.keySet();
         Iterator i = cles.iterator();
@@ -58,7 +49,6 @@ public class Line {
         res += "\n Argument : ";
         while(i.hasNext()){
             Object cle = i.next();
-            Object valeur = properties.get(cle);
             res += "cle : " + cle + ", valeurs=";
             for(int j = 0; j < properties.get(cle).getValues().length ; j++){
                 res += " "+properties.get(cle).getValues()[j];
@@ -68,7 +58,6 @@ public class Line {
         return res;
     }
 
-    @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
@@ -93,8 +82,7 @@ public class Line {
             if (!Objects.equals(entry.getValue(), other.properties.get(entry.getKey()))) {
                 return false;
             }
-        }
-        
+        }      
         return true;
     }
 }

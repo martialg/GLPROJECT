@@ -1,16 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.util.Objects;
 
-/**
- *
- * @driver Romain
- * @observer Martial
- */
 public class Node {
    
     private String name;
@@ -23,7 +14,6 @@ public class Node {
         return name;
     }
 
-    @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;

@@ -15,10 +15,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author Romain
- */
 public class GraphCreatorTest {
     
     public GraphCreatorTest() {
@@ -44,7 +40,6 @@ public class GraphCreatorTest {
      * Test of GenerateGraph method, of class GraphCreator.
      */
     @Test
-    @SuppressWarnings("empty-statement")
     public void testGenerateGraph() throws Exception {
         System.out.println("GenerateGraph");
         String file_path = "test/io/GraphCreatorTest.txt";
@@ -123,9 +118,6 @@ public class GraphCreatorTest {
         expResult.addEdge(e52);
         
         Graph result = GraphCreator.GenerateGraph(file_path);
-        
-        System.out.println(result.toString());
-        System.out.println(expResult.toString());
         
         assertEquals(expResult,result);
         
