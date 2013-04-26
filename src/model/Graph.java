@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  *
@@ -108,8 +109,14 @@ public class Graph {
 
     public String toString() {
         String chaine = "Graph : \n";
-        for (Map.Entry entry : edges.entrySet()) {
-            chaine += entry.toString() + "\n";
+        Set<Entry<String,ArrayList<Edge>>> list = edges.entrySet();
+        for (Entry<String,ArrayList<Edge>> entry : list) {
+            String nom = entry.getKey();
+            ArrayList<Edge> edges_entry = entry.getValue();
+            chaine += "Lien(s) du noeud : " + nom + "\n";
+            for(Edge e : edges_entry){
+                chaine += "\t" + e ;
+            }
         }
         return chaine;
     }
