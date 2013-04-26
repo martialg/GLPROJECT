@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.util.ArrayList;
@@ -12,11 +8,6 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-/**
- *
- * @driver Romain
- * @observer Martial
- */
 public class Graph {
 
     /* Attributes */
@@ -121,7 +112,6 @@ public class Graph {
         return chaine;
     }
 
-    @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;

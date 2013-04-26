@@ -4,11 +4,8 @@
  */
 package io;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import model.Edge;
 import model.Line;
-import model.Node;
 import model.Property;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -17,10 +14,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author Romain
- */
 public class ReadTest {
     
     public ReadTest() {
@@ -43,18 +36,6 @@ public class ReadTest {
     }
 
     /**
-     * Test of read method, of class Read.
-     */
-    @Test
-    public void testRead() throws Exception {
-        System.out.println("read");
-        String file_path = "test/io/GraphCreatorTest.txt";
-        ArrayList expResult = new ArrayList<Line>();
-        ArrayList result = Read.read(file_path);
-        //assertEquals(expResult, result);
-    }
-
-    /**
      * Test of extractLine method, of class Read.
      */
     @Test
@@ -74,9 +55,6 @@ public class ReadTest {
         expResult = new Line("Anna","Lucie","friend",2,map);
         
         Line result = Read.extractLine(line);
-        
-        System.out.println(expResult.toString());
-        System.out.println(result.toString());
         
         assertEquals(expResult.getNode_name1(),result.getNode_name1());
         assertEquals(expResult.getNode_name2(),result.getNode_name2());

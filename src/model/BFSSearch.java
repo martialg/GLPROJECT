@@ -14,7 +14,6 @@ public class BFSSearch extends GraphSearch {
         super(graph,uniquess_type,level,edges);
     }
     
-    @Override
     public void search(Node node) {
         ArrayList<NodeLevel> list_nodes = new ArrayList<NodeLevel>();        
         list_nodes.add(new NodeLevel(node, 1));

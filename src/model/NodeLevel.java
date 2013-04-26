@@ -12,7 +12,6 @@ public class NodeLevel {
         this.level = level;
     }
     
-    @Override
     public boolean equals(Object obj) {
         Node node_temp = (Node) obj;
         if(node.getName().compareTo(node_temp.getName()) == 0){
